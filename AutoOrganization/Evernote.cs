@@ -120,6 +120,11 @@ namespace AutoOrganization
             }
         }
 
+        /// <summary>
+        /// Notebookを移動する
+        /// </summary>
+        /// <param name="note">対象Note</param>
+        /// <param name="toNotebookName">移動先Notebook名称</param>
         private void MoveNote(Note note, string toNotebookName)
         {
             note.NotebookGuid = Notebooks[toNotebookName];
@@ -127,6 +132,11 @@ namespace AutoOrganization
             noteStore_.updateNote(authToken_, note);
         }
 
+        /// <summary>
+        /// Tagを付加する
+        /// </summary>
+        /// <param name="note">対象Note</param>
+        /// <param name="tagName">付加するTag名称</param>
         private void AddTag(Note note,string tagName)
         {
             string tagGuid=Tags[tagName];
@@ -137,10 +147,23 @@ namespace AutoOrganization
             noteStore_.updateNote(authToken_, note);
         }
 
+        /// <summary>
+        /// フィルタしたNoteのGuidのリストを返す
+        /// </summary>
+        /// <param name="notebookName">対象Notebook</param>
+        /// <param name="tagName">対象Tag</param>
+        /// <param name="words">対象ワード</param>
+        /// <returns>NoteのGuidリスト</returns>
         public List<string> GetTargetNoteGuids(string notebookName,string tagName=null,string words=null)
         {
             NoteFilter noteFilter = new NoteFilter();
             noteFilter.NotebookGuid = Notebooks[notebookName];
+
+            if (tagName != null)
+                noteFilter.TagGuids.Add(Tags[tagName]);
+            
+            if (words != null)
+                noteFilter.Words = words;
 
             var notes = noteStore_.findNotes(authToken_, noteFilter, 0, 1000);
             var result = new List<string>();
@@ -152,14 +175,24 @@ namespace AutoOrganization
             return result;
         }
 
-        public void DoAction(string targetNotebook, string targetTags, bool isMoveNotebook,
+        /// <summary>
+        /// 条件に基づいた操作を行う
+        /// </summary>
+        /// <param name="targetNotebook">対象Notebook</param>
+        /// <param name="targetTags">対象Tag</param>
+        /// <param name="isMoveNotebook">Notebookを移動するか</param>
+        /// <param name="MoveNotebook">移動先Notebook名称</param>
+        /// <param name="isAddTags">Tagを付加するか</param>
+        /// <param name="addTags">付加するTag名称</param>
+        /// <returns>操作が行われたNote数（操作前と変化がなかったNoteを含む）</returns>
+        public int DoAction(string targetNotebook, string targetTags, bool isMoveNotebook,
             string MoveNotebook, bool isAddTags, string addTags)
         {
             NoteFilter noteFilter = new NoteFilter();
             noteFilter.NotebookGuid = Notebooks[targetNotebook];
             noteFilter.TagGuids = new List<string>() { Tags[targetTags] };
 
-            var targetNotes = noteStore_.findNotes(authToken_, noteFilter, 0, 100);
+            var targetNotes = noteStore_.findNotes(authToken_, noteFilter, 0, 1000);
 
             foreach (var targetNote in targetNotes.Notes)
             {
@@ -171,32 +204,8 @@ namespace AutoOrganization
 
                 noteStore_.updateNote(authToken_, targetNote);
             }
-        }
 
-
-
-
-
-        /// <summary>
-        /// テスト用メソッド
-        /// </summary>
-        public void testNote()
-        {
-            NoteFilter nf = new NoteFilter();
-            nf.NotebookGuid = Notebooks["note02"];
-            nf.Words = "filter";
-
-            var test = noteStore_.findNotes(authToken_, nf, 0, 100);
-
-            var testnote = test.Notes[0];
-            if (testnote.TagGuids == null)
-                testnote.TagGuids = new List<string>() { Tags["Tag01"] };
-            else
-                testnote.TagGuids.Add(Tags["tag01"]);
-
-
-
-            noteStore_.updateNote(authToken_, testnote);
+            return targetNotes.Notes.Count;
         }
     }
 }

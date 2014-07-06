@@ -32,6 +32,7 @@
             this.lbPreset = new System.Windows.Forms.ListBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logInIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.gbAction = new System.Windows.Forms.GroupBox();
@@ -45,7 +46,6 @@
             this.lblTargetTag = new System.Windows.Forms.Label();
             this.cbTargetNotebook = new System.Windows.Forms.ComboBox();
             this.btnAddPreset = new System.Windows.Forms.Button();
-            this.logInIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbAction.SuspendLayout();
@@ -90,6 +90,13 @@
             this.fileFToolStripMenuItem.Name = "fileFToolStripMenuItem";
             this.fileFToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.fileFToolStripMenuItem.Text = "File(&F)";
+            // 
+            // logInIToolStripMenuItem
+            // 
+            this.logInIToolStripMenuItem.Name = "logInIToolStripMenuItem";
+            this.logInIToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.logInIToolStripMenuItem.Text = "LogIn(&I)";
+            this.logInIToolStripMenuItem.Click += new System.EventHandler(this.logInIToolStripMenuItem_Click);
             // 
             // closeCToolStripMenuItem
             // 
@@ -218,13 +225,6 @@
             this.btnAddPreset.UseVisualStyleBackColor = true;
             this.btnAddPreset.Click += new System.EventHandler(this.btnAddPreset_Click);
             // 
-            // logInIToolStripMenuItem
-            // 
-            this.logInIToolStripMenuItem.Name = "logInIToolStripMenuItem";
-            this.logInIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.logInIToolStripMenuItem.Text = "LogIn(&I)";
-            this.logInIToolStripMenuItem.Click += new System.EventHandler(this.logInIToolStripMenuItem_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -237,7 +237,8 @@
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "FormMain";
-            this.Text = "Form1";
+            this.ShowIcon = false;
+            this.Text = "AutoOrganization";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.groupBox1.ResumeLayout(false);

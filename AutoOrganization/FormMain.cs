@@ -33,6 +33,7 @@ namespace AutoOrganization
                 fs.Close();
             }
 
+            //ライブラリデータが存在しない場合、新たにログインしライブラリデータを作成する
             catch
             {
                 string token;
@@ -49,6 +50,8 @@ namespace AutoOrganization
                 var userName = model_.Evernote.GetEvernoteUserName;
 
             }
+
+            //接続ができない場合、再度ログインし、ライブラリデータのログイン情報のみ更新する
             catch
             {
                 string token;
@@ -73,15 +76,6 @@ namespace AutoOrganization
             _refleshLbPresets();
 
             lbPreset.SelectedIndex = 0;
-        }
-
-        private void _refleshLbPresets()
-        {
-            lbPreset.Items.Clear();
-            for (int i = 0; i < model_.Presets.Rows.Count; i++)
-			{
-                lbPreset.Items.Add(model_.Presets.Rows[i]["ID"].ToString());
-			}
         }
 
         private void btnAddPreset_Click(object sender, EventArgs e)
@@ -136,19 +130,6 @@ namespace AutoOrganization
             _updatePreset();
         }
 
-        private void _updatePreset()
-        {
-            if (isChangeSelectedBySystem)
-                return;
-
-            if (cbTargetNotebook.SelectedItem == null || cbMoteToNotebook.SelectedItem == null)
-                return;
-
-            model_.UpdatePreset(lbPreset.SelectedIndex, cbTargetNotebook.SelectedItem.ToString(),
-                tbTargetTags.Text, chbMoveToNotebook.Checked, cbMoteToNotebook.SelectedItem.ToString(),
-                chbAddTags.Checked, tbAddTags.Text);
-        }
-
         private void btnDoSelectedAction_Click(object sender, EventArgs e)
         {
             DataRow dr = model_.Presets.Rows[lbPreset.SelectedIndex];
@@ -170,6 +151,43 @@ namespace AutoOrganization
             loginEvernote(out token);
         }
 
+        /// <summary>
+        /// ActionリストをModelに基づいて更新する
+        /// </summary>
+        private void _refleshLbPresets()
+        {
+            int selectedIndex = lbPreset.SelectedIndex;
+
+            lbPreset.Items.Clear();
+            for (int i = 0; i < model_.Presets.Rows.Count; i++)
+            {
+                lbPreset.Items.Add(model_.Presets.Rows[i]["ID"].ToString());
+            }
+
+            lbPreset.SelectedIndex = selectedIndex;
+        }
+
+        /// <summary>
+        /// 選択されているActionを入力されている情報に基いて更新する
+        /// </summary>
+        private void _updatePreset()
+        {
+            if (isChangeSelectedBySystem)
+                return;
+
+            if (cbTargetNotebook.SelectedItem == null || cbMoteToNotebook.SelectedItem == null)
+                return;
+
+            model_.UpdatePreset(lbPreset.SelectedIndex, cbTargetNotebook.SelectedItem.ToString(),
+                tbTargetTags.Text, chbMoveToNotebook.Checked, cbMoteToNotebook.SelectedItem.ToString(),
+                chbAddTags.Checked, tbAddTags.Text);
+        }
+
+        /// <summary>
+        /// Evernoteにログインする
+        /// </summary>
+        /// <param name="token">EvernoteToken</param>
+        /// <returns>ログインの成否</returns>
         private bool loginEvernote(out string token)
         {
             token = string.Empty;
