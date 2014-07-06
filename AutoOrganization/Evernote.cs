@@ -152,6 +152,31 @@ namespace AutoOrganization
             return result;
         }
 
+        public void DoAction(string targetNotebook, string targetTags, bool isMoveNotebook,
+            string MoveNotebook, bool isAddTags, string addTags)
+        {
+            NoteFilter noteFilter = new NoteFilter();
+            noteFilter.NotebookGuid = Notebooks[targetNotebook];
+            noteFilter.TagGuids = new List<string>() { Tags[targetTags] };
+
+            var targetNotes = noteStore_.findNotes(authToken_, noteFilter, 0, 100);
+
+            foreach (var targetNote in targetNotes.Notes)
+            {
+                if (isMoveNotebook)
+                    targetNote.NotebookGuid = notebooks_[MoveNotebook];
+
+                if (isAddTags)
+                    targetNote.TagGuids.Add(Tags[addTags]);
+
+                noteStore_.updateNote(authToken_, targetNote);
+            }
+        }
+
+
+
+
+
         /// <summary>
         /// テスト用メソッド
         /// </summary>

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnDoSelectedAction = new System.Windows.Forms.Button();
             this.lbPreset = new System.Windows.Forms.ListBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,21 +45,22 @@
             this.lblTargetTag = new System.Windows.Forms.Label();
             this.cbTargetNotebook = new System.Windows.Forms.ComboBox();
             this.btnAddPreset = new System.Windows.Forms.Button();
+            this.logInIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbAction.SuspendLayout();
             this.gbTarget.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // btnDoSelectedAction
             // 
-            this.button1.Location = new System.Drawing.Point(297, 426);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnDoSelectedAction.Location = new System.Drawing.Point(231, 426);
+            this.btnDoSelectedAction.Name = "btnDoSelectedAction";
+            this.btnDoSelectedAction.Size = new System.Drawing.Size(141, 23);
+            this.btnDoSelectedAction.TabIndex = 0;
+            this.btnDoSelectedAction.Text = "選択されたアクションを実行";
+            this.btnDoSelectedAction.UseVisualStyleBackColor = true;
+            this.btnDoSelectedAction.Click += new System.EventHandler(this.btnDoSelectedAction_Click);
             // 
             // lbPreset
             // 
@@ -84,6 +85,7 @@
             // fileFToolStripMenuItem
             // 
             this.fileFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.logInIToolStripMenuItem,
             this.closeCToolStripMenuItem});
             this.fileFToolStripMenuItem.Name = "fileFToolStripMenuItem";
             this.fileFToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
@@ -216,6 +218,13 @@
             this.btnAddPreset.UseVisualStyleBackColor = true;
             this.btnAddPreset.Click += new System.EventHandler(this.btnAddPreset_Click);
             // 
+            // logInIToolStripMenuItem
+            // 
+            this.logInIToolStripMenuItem.Name = "logInIToolStripMenuItem";
+            this.logInIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.logInIToolStripMenuItem.Text = "LogIn(&I)";
+            this.logInIToolStripMenuItem.Click += new System.EventHandler(this.logInIToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -224,7 +233,7 @@
             this.Controls.Add(this.btnAddPreset);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lbPreset);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnDoSelectedAction);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "FormMain";
@@ -243,7 +252,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnDoSelectedAction;
         private System.Windows.Forms.ListBox lbPreset;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileFToolStripMenuItem;
@@ -260,6 +269,7 @@
         private System.Windows.Forms.Label lblTargetTag;
         private System.Windows.Forms.ComboBox cbTargetNotebook;
         private System.Windows.Forms.Button btnAddPreset;
+        private System.Windows.Forms.ToolStripMenuItem logInIToolStripMenuItem;
     }
 }
 

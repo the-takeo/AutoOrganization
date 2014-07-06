@@ -4,15 +4,23 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization;
 
 namespace AutoOrganization
 {
+    [DataContract]
     class Model
     {
+        [DataMember]
         DataTable dtPreset_;
+
+        [DataMember]
+        string evernoteAuthToken_;
+
         Evernote evernote_;
 
-        public Model()
+        public Model(string evernoteAuthToken)
         {
             dtPreset_ = new DataTable("Presets");
             dtPreset_.Columns.Add("ID", typeof(string));
@@ -26,6 +34,10 @@ namespace AutoOrganization
             dtPreset_.PrimaryKey = new DataColumn[] { dtPreset_.Columns["ID"] };
 
             dtPreset_.AcceptChanges();
+
+            evernoteAuthToken_ = evernoteAuthToken;
+
+            evernote_ = new Evernote(evernoteAuthToken_);
         }
 
         public DataTable Presets
@@ -35,7 +47,26 @@ namespace AutoOrganization
 
         public Evernote Evernote
         {
-            get { return evernote_; }
+            get 
+            {
+                if(evernote_==null)
+                {
+                    evernote_ = new Evernote(evernoteAuthToken_);
+                }
+
+                return evernote_; 
+            }
+        }
+
+        public string EvernoteAuthToken
+        {
+            get { return evernoteAuthToken_; }
+            set { evernoteAuthToken_ = value; }
+        }
+
+        public void RefleshEvernoteClass()
+        {
+            evernote_ = new Evernote(EvernoteAuthToken);
         }
 
         public void AddNewPreset()
@@ -75,6 +106,10 @@ namespace AutoOrganization
             newPreset["AddTags"] = string.Empty;
 
             dtPreset_.Rows.Add(newPreset);
+
+            dtPreset_.AcceptChanges();
+
+            Save();
         }
 
         public void UpdatePreset(int index,string targetNotebook,string targetTags,bool isMoveNotebook,
@@ -90,6 +125,16 @@ namespace AutoOrganization
             dr["AddTags"] = AddTags;
 
             dtPreset_.AcceptChanges();
+
+            Save();
+        }
+
+        public void Save()
+        {
+            DataContractSerializer serializer = new DataContractSerializer(typeof(Model));
+            FileStream fs = new FileStream(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + @"\AutoSettings.xml", FileMode.Create);
+            serializer.WriteObject(fs, this);
+            fs.Close();
         }
     }
 }
