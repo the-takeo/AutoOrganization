@@ -9,6 +9,7 @@ using Evernote.EDAM.UserStore;
 using Evernote.EDAM.NoteStore;
 using System.Drawing;
 using System.Text;
+using System.Collections;
 
 namespace AutoOrganization
 {
@@ -154,18 +155,18 @@ namespace AutoOrganization
         /// <param name="tagName">対象Tag</param>
         /// <param name="words">対象ワード</param>
         /// <returns>NoteのGuidリスト</returns>
-        public List<string> GetTargetNoteGuids(string notebookName,string tagName=null,string words=null)
+        public List<string> GetTargetNoteGuids(string notebookName, string tagName = null, string words = null)
         {
             NoteFilter noteFilter = new NoteFilter();
             noteFilter.NotebookGuid = Notebooks[notebookName];
 
             if (tagName != null)
                 noteFilter.TagGuids.Add(Tags[tagName]);
-            
+
             if (words != null)
                 noteFilter.Words = words;
 
-            var notes = noteStore_.findNotes(authToken_, noteFilter, 0, 1000);
+            var notes = noteStore_.findNotesMetadata(authToken_, noteFilter, 0, 1000, new NotesMetadataResultSpec());
             var result = new List<string>();
             foreach (var note in notes.Notes)
             {
@@ -185,17 +186,31 @@ namespace AutoOrganization
         /// <param name="isAddTags">Tagを付加するか</param>
         /// <param name="addTags">付加するTag名称</param>
         /// <returns>操作が行われたNote数（操作前と変化がなかったNoteを含む）</returns>
-        public int DoAction(string targetNotebook, string targetTags, bool isMoveNotebook,
+        public int DoAction(string targetNotebook, string targetTags, string targetURL,bool isMoveNotebook,
             string MoveNotebook, bool isAddTags, string addTags)
         {
             NoteFilter noteFilter = new NoteFilter();
             noteFilter.NotebookGuid = Notebooks[targetNotebook];
-            noteFilter.TagGuids = new List<string>() { Tags[targetTags] };
 
-            var targetNotes = noteStore_.findNotes(authToken_, noteFilter, 0, 1000);
+            if (string.IsNullOrEmpty(targetTags) == false)
+                noteFilter.TagGuids = new List<string>() { Tags[targetTags] };
 
-            foreach (var targetNote in targetNotes.Notes)
+            var notesMetadataResultSpec = new NotesMetadataResultSpec();
+            notesMetadataResultSpec.IncludeAttributes = true;
+
+            var targetNotes = noteStore_.findNotesMetadata(authToken_, noteFilter, 0, 1000, notesMetadataResultSpec);
+
+            IEnumerable<NoteMetadata> targetNoteMetadataList;
+            if (string.IsNullOrEmpty(targetURL) == false)
+                targetNoteMetadataList = from note in targetNotes.Notes where (note.Attributes.SourceURL != null) && note.Attributes.SourceURL.Contains(targetURL) select note;
+            else
+                targetNoteMetadataList = from note in targetNotes.Notes select note;
+
+
+            foreach (var targetNoteData in targetNoteMetadataList)
             {
+                var targetNote = noteStore_.getNote(authToken_, targetNoteData.Guid, false, false, false, false);
+
                 if (isMoveNotebook)
                     targetNote.NotebookGuid = notebooks_[MoveNotebook];
 

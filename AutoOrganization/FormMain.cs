@@ -92,6 +92,7 @@ namespace AutoOrganization
 
             cbTargetNotebook.SelectedItem = model_.Presets.Rows[selectedIndex]["TargetNotebook"];
             tbTargetTags.Text = model_.Presets.Rows[selectedIndex]["TargetTags"].ToString();
+            tbTargetUrl.Text = model_.Presets.Rows[selectedIndex]["TargetURL"].ToString();
             chbMoveToNotebook.Checked = (bool)model_.Presets.Rows[selectedIndex]["IsMoveNotebook"];
             cbMoteToNotebook.SelectedItem = model_.Presets.Rows[selectedIndex]["MoveToNotebook"];
             chbAddTags.Checked = (bool)model_.Presets.Rows[selectedIndex]["IsAddTags"];
@@ -120,6 +121,11 @@ namespace AutoOrganization
             _updatePreset();
         }
 
+        private void tbTargetUrl_Leave(object sender, EventArgs e)
+        {
+            _updatePreset();
+        }
+
         private void tbTargetTags_Leave(object sender, EventArgs e)
         {
             _updatePreset();
@@ -136,13 +142,14 @@ namespace AutoOrganization
 
             string targetNotebook = dr["TargetNotebook"].ToString();
             string targetTags = dr["TargetTags"].ToString();
+            string targetURL = dr["TargetURL"].ToString();
             bool isMoveNotebook = (bool)dr["IsMoveNotebook"];
             string MoveNotebook = dr["MoveToNotebook"].ToString();
             bool isAddTags = (bool)dr["IsAddTags"];
             string addTags = dr["AddTags"].ToString();
 
-            model_.Evernote.DoAction(targetNotebook, targetTags, isMoveNotebook,
-                MoveNotebook, isAddTags, addTags);
+            model_.Evernote.DoAction(targetNotebook, targetTags, targetURL,
+                isMoveNotebook, MoveNotebook, isAddTags, addTags);
         }
 
         private void logInIToolStripMenuItem_Click(object sender, EventArgs e)
@@ -179,7 +186,7 @@ namespace AutoOrganization
                 return;
 
             model_.UpdatePreset(lbPreset.SelectedIndex, cbTargetNotebook.SelectedItem.ToString(),
-                tbTargetTags.Text, chbMoveToNotebook.Checked, cbMoteToNotebook.SelectedItem.ToString(),
+                tbTargetTags.Text,tbTargetUrl.Text, chbMoveToNotebook.Checked, cbMoteToNotebook.SelectedItem.ToString(),
                 chbAddTags.Checked, tbAddTags.Text);
         }
 

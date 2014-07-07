@@ -26,6 +26,7 @@ namespace AutoOrganization
             dtPreset_.Columns.Add("ID", typeof(string));
             dtPreset_.Columns.Add("TargetNotebook", typeof(string));
             dtPreset_.Columns.Add("TargetTags", typeof(string));
+            dtPreset_.Columns.Add("TargetURL", typeof(string));
             dtPreset_.Columns.Add("IsMoveNotebook", typeof(bool));
             dtPreset_.Columns.Add("MoveToNotebook", typeof(string));
             dtPreset_.Columns.Add("AddTags", typeof(string));
@@ -100,6 +101,7 @@ namespace AutoOrganization
 
             newPreset["TargetNotebook"] = evernote_.DefaultNotebookName;
             newPreset["TargetTags"] = string.Empty;
+            newPreset["TargetURL"] = string.Empty;
             newPreset["IsMoveNotebook"] = false;
             newPreset["MoveToNotebook"] = evernote_.DefaultNotebookName;
             newPreset["IsAddTags"] = false;
@@ -112,13 +114,14 @@ namespace AutoOrganization
             Save();
         }
 
-        public void UpdatePreset(int index,string targetNotebook,string targetTags,bool isMoveNotebook,
-            string moveToNotebook,bool isAddTags,string AddTags)
+        public void UpdatePreset(int index,string targetNotebook,string targetTags,string targetURL,
+            bool isMoveNotebook,string moveToNotebook,bool isAddTags,string AddTags)
         {
             DataRow dr=dtPreset_.Rows[index];
 
             dr["TargetNotebook"] = targetNotebook;
             dr["TargetTags"] = targetTags;
+            dr["TargetURL"] = targetURL;
             dr["IsMoveNotebook"] = isMoveNotebook;
             dr["MoveToNotebook"] = moveToNotebook;
             dr["IsAddTags"] = isAddTags;

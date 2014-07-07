@@ -46,6 +46,8 @@
             this.lblTargetTag = new System.Windows.Forms.Label();
             this.cbTargetNotebook = new System.Windows.Forms.ComboBox();
             this.btnAddPreset = new System.Windows.Forms.Button();
+            this.lblTargetURL = new System.Windows.Forms.Label();
+            this.tbTargetUrl = new System.Windows.Forms.TextBox();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbAction.SuspendLayout();
@@ -57,7 +59,7 @@
             this.btnDoSelectedAction.Location = new System.Drawing.Point(231, 426);
             this.btnDoSelectedAction.Name = "btnDoSelectedAction";
             this.btnDoSelectedAction.Size = new System.Drawing.Size(141, 23);
-            this.btnDoSelectedAction.TabIndex = 0;
+            this.btnDoSelectedAction.TabIndex = 9;
             this.btnDoSelectedAction.Text = "選択されたアクションを実行";
             this.btnDoSelectedAction.UseVisualStyleBackColor = true;
             this.btnDoSelectedAction.Click += new System.EventHandler(this.btnDoSelectedAction_Click);
@@ -69,7 +71,7 @@
             this.lbPreset.Location = new System.Drawing.Point(12, 27);
             this.lbPreset.Name = "lbPreset";
             this.lbPreset.Size = new System.Drawing.Size(177, 388);
-            this.lbPreset.TabIndex = 1;
+            this.lbPreset.TabIndex = 0;
             this.lbPreset.SelectedIndexChanged += new System.EventHandler(this.lbPreset_SelectedIndexChanged);
             // 
             // menuStrip
@@ -133,7 +135,7 @@
             this.tbAddTags.Location = new System.Drawing.Point(6, 88);
             this.tbAddTags.Name = "tbAddTags";
             this.tbAddTags.Size = new System.Drawing.Size(153, 19);
-            this.tbAddTags.TabIndex = 10;
+            this.tbAddTags.TabIndex = 7;
             this.tbAddTags.Leave += new System.EventHandler(this.tbAddTags_Leave);
             // 
             // chbAddTags
@@ -142,7 +144,7 @@
             this.chbAddTags.Location = new System.Drawing.Point(6, 66);
             this.chbAddTags.Name = "chbAddTags";
             this.chbAddTags.Size = new System.Drawing.Size(76, 16);
-            this.chbAddTags.TabIndex = 9;
+            this.chbAddTags.TabIndex = 6;
             this.chbAddTags.Text = "Tagを付加";
             this.chbAddTags.UseVisualStyleBackColor = true;
             this.chbAddTags.CheckedChanged += new System.EventHandler(this.chbAddTags_CheckedChanged);
@@ -153,7 +155,8 @@
             this.cbMoteToNotebook.Location = new System.Drawing.Point(6, 40);
             this.cbMoteToNotebook.Name = "cbMoteToNotebook";
             this.cbMoteToNotebook.Size = new System.Drawing.Size(153, 20);
-            this.cbMoteToNotebook.TabIndex = 1;
+            this.cbMoteToNotebook.TabIndex = 5;
+            this.cbMoteToNotebook.Tag = "";
             this.cbMoteToNotebook.SelectedIndexChanged += new System.EventHandler(this.cbMoteToNotebook_SelectedIndexChanged);
             // 
             // chbMoveToNotebook
@@ -162,13 +165,15 @@
             this.chbMoveToNotebook.Location = new System.Drawing.Point(8, 18);
             this.chbMoveToNotebook.Name = "chbMoveToNotebook";
             this.chbMoveToNotebook.Size = new System.Drawing.Size(105, 16);
-            this.chbMoveToNotebook.TabIndex = 0;
+            this.chbMoveToNotebook.TabIndex = 4;
             this.chbMoveToNotebook.Text = "Notebookを移動";
             this.chbMoveToNotebook.UseVisualStyleBackColor = true;
             this.chbMoveToNotebook.CheckedChanged += new System.EventHandler(this.chbMoveToNotebook_CheckedChanged);
             // 
             // gbTarget
             // 
+            this.gbTarget.Controls.Add(this.lblTargetURL);
+            this.gbTarget.Controls.Add(this.tbTargetUrl);
             this.gbTarget.Controls.Add(this.tbTargetTags);
             this.gbTarget.Controls.Add(this.lblTargetNotebook);
             this.gbTarget.Controls.Add(this.lblTargetTag);
@@ -185,7 +190,7 @@
             this.tbTargetTags.Location = new System.Drawing.Point(8, 68);
             this.tbTargetTags.Name = "tbTargetTags";
             this.tbTargetTags.Size = new System.Drawing.Size(151, 19);
-            this.tbTargetTags.TabIndex = 8;
+            this.tbTargetTags.TabIndex = 2;
             this.tbTargetTags.Leave += new System.EventHandler(this.tbTargetTags_Leave);
             // 
             // lblTargetNotebook
@@ -212,7 +217,7 @@
             this.cbTargetNotebook.Location = new System.Drawing.Point(8, 30);
             this.cbTargetNotebook.Name = "cbTargetNotebook";
             this.cbTargetNotebook.Size = new System.Drawing.Size(151, 20);
-            this.cbTargetNotebook.TabIndex = 6;
+            this.cbTargetNotebook.TabIndex = 1;
             this.cbTargetNotebook.SelectedIndexChanged += new System.EventHandler(this.cbTargetNotebook_SelectedIndexChanged);
             // 
             // btnAddPreset
@@ -220,10 +225,27 @@
             this.btnAddPreset.Location = new System.Drawing.Point(114, 426);
             this.btnAddPreset.Name = "btnAddPreset";
             this.btnAddPreset.Size = new System.Drawing.Size(75, 23);
-            this.btnAddPreset.TabIndex = 4;
+            this.btnAddPreset.TabIndex = 8;
             this.btnAddPreset.Text = "追加";
             this.btnAddPreset.UseVisualStyleBackColor = true;
             this.btnAddPreset.Click += new System.EventHandler(this.btnAddPreset_Click);
+            // 
+            // lblTargetURL
+            // 
+            this.lblTargetURL.AutoSize = true;
+            this.lblTargetURL.Location = new System.Drawing.Point(6, 90);
+            this.lblTargetURL.Name = "lblTargetURL";
+            this.lblTargetURL.Size = new System.Drawing.Size(27, 12);
+            this.lblTargetURL.TabIndex = 5;
+            this.lblTargetURL.Text = "URL";
+            // 
+            // tbTargetUrl
+            // 
+            this.tbTargetUrl.Location = new System.Drawing.Point(8, 105);
+            this.tbTargetUrl.Name = "tbTargetUrl";
+            this.tbTargetUrl.Size = new System.Drawing.Size(151, 19);
+            this.tbTargetUrl.TabIndex = 3;
+            this.tbTargetUrl.Leave += new System.EventHandler(this.tbTargetUrl_Leave);
             // 
             // FormMain
             // 
@@ -271,6 +293,8 @@
         private System.Windows.Forms.ComboBox cbTargetNotebook;
         private System.Windows.Forms.Button btnAddPreset;
         private System.Windows.Forms.ToolStripMenuItem logInIToolStripMenuItem;
+        private System.Windows.Forms.Label lblTargetURL;
+        private System.Windows.Forms.TextBox tbTargetUrl;
     }
 }
 
