@@ -22,6 +22,9 @@ namespace AutoOrganization
         {
             InitializeComponent();
 
+            if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable() == false)
+                MessageBox.Show(Resource.OffLineMsg);
+
             try
             {
                 System.Runtime.Serialization.DataContractSerializer serializer = new System.Runtime.Serialization.DataContractSerializer(typeof(Model));
@@ -76,6 +79,8 @@ namespace AutoOrganization
             _refleshLbPresets();
 
             lbPreset.SelectedIndex = 0;
+
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
         }
 
         private void btnAddPreset_Click(object sender, EventArgs e)
@@ -148,8 +153,10 @@ namespace AutoOrganization
             bool isAddTags = (bool)dr["IsAddTags"];
             string addTags = dr["AddTags"].ToString();
 
-            model_.Evernote.DoAction(targetNotebook, targetTags, targetURL,
+            int count = model_.Evernote.DoAction(targetNotebook, targetTags, targetURL,
                 isMoveNotebook, MoveNotebook, isAddTags, addTags);
+
+            MessageBox.Show(string.Format(Resource.ActionResultMsg, count.ToString()), Resource.ActionResultMsgTitle);
         }
 
         private void logInIToolStripMenuItem_Click(object sender, EventArgs e)
@@ -208,6 +215,11 @@ namespace AutoOrganization
             }
             else
                 return false;
+        }
+
+        private void closeCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

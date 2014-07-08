@@ -41,13 +41,13 @@
             this.cbMoteToNotebook = new System.Windows.Forms.ComboBox();
             this.chbMoveToNotebook = new System.Windows.Forms.CheckBox();
             this.gbTarget = new System.Windows.Forms.GroupBox();
+            this.lblTargetURL = new System.Windows.Forms.Label();
+            this.tbTargetUrl = new System.Windows.Forms.TextBox();
             this.tbTargetTags = new System.Windows.Forms.TextBox();
             this.lblTargetNotebook = new System.Windows.Forms.Label();
             this.lblTargetTag = new System.Windows.Forms.Label();
             this.cbTargetNotebook = new System.Windows.Forms.ComboBox();
             this.btnAddPreset = new System.Windows.Forms.Button();
-            this.lblTargetURL = new System.Windows.Forms.Label();
-            this.tbTargetUrl = new System.Windows.Forms.TextBox();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbAction.SuspendLayout();
@@ -56,6 +56,7 @@
             // 
             // btnDoSelectedAction
             // 
+            this.btnDoSelectedAction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDoSelectedAction.Location = new System.Drawing.Point(231, 426);
             this.btnDoSelectedAction.Name = "btnDoSelectedAction";
             this.btnDoSelectedAction.Size = new System.Drawing.Size(141, 23);
@@ -66,6 +67,9 @@
             // 
             // lbPreset
             // 
+            this.lbPreset.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbPreset.FormattingEnabled = true;
             this.lbPreset.ItemHeight = 12;
             this.lbPreset.Location = new System.Drawing.Point(12, 27);
@@ -96,18 +100,21 @@
             // logInIToolStripMenuItem
             // 
             this.logInIToolStripMenuItem.Name = "logInIToolStripMenuItem";
-            this.logInIToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.logInIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.logInIToolStripMenuItem.Text = "LogIn(&I)";
             this.logInIToolStripMenuItem.Click += new System.EventHandler(this.logInIToolStripMenuItem_Click);
             // 
             // closeCToolStripMenuItem
             // 
             this.closeCToolStripMenuItem.Name = "closeCToolStripMenuItem";
-            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.closeCToolStripMenuItem.Text = "Close(&C)";
+            this.closeCToolStripMenuItem.Click += new System.EventHandler(this.closeCToolStripMenuItem_Click);
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.gbAction);
             this.groupBox1.Controls.Add(this.gbTarget);
             this.groupBox1.Location = new System.Drawing.Point(195, 27);
@@ -119,6 +126,9 @@
             // 
             // gbAction
             // 
+            this.gbAction.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbAction.Controls.Add(this.tbAddTags);
             this.gbAction.Controls.Add(this.chbAddTags);
             this.gbAction.Controls.Add(this.cbMoteToNotebook);
@@ -132,6 +142,7 @@
             // 
             // tbAddTags
             // 
+            this.tbAddTags.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbAddTags.Location = new System.Drawing.Point(6, 88);
             this.tbAddTags.Name = "tbAddTags";
             this.tbAddTags.Size = new System.Drawing.Size(153, 19);
@@ -140,6 +151,7 @@
             // 
             // chbAddTags
             // 
+            this.chbAddTags.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chbAddTags.AutoSize = true;
             this.chbAddTags.Location = new System.Drawing.Point(6, 66);
             this.chbAddTags.Name = "chbAddTags";
@@ -151,6 +163,7 @@
             // 
             // cbMoteToNotebook
             // 
+            this.cbMoteToNotebook.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbMoteToNotebook.FormattingEnabled = true;
             this.cbMoteToNotebook.Location = new System.Drawing.Point(6, 40);
             this.cbMoteToNotebook.Name = "cbMoteToNotebook";
@@ -161,6 +174,7 @@
             // 
             // chbMoveToNotebook
             // 
+            this.chbMoveToNotebook.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chbMoveToNotebook.AutoSize = true;
             this.chbMoveToNotebook.Location = new System.Drawing.Point(8, 18);
             this.chbMoveToNotebook.Name = "chbMoveToNotebook";
@@ -172,6 +186,8 @@
             // 
             // gbTarget
             // 
+            this.gbTarget.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbTarget.Controls.Add(this.lblTargetURL);
             this.gbTarget.Controls.Add(this.tbTargetUrl);
             this.gbTarget.Controls.Add(this.tbTargetTags);
@@ -185,53 +201,9 @@
             this.gbTarget.TabStop = false;
             this.gbTarget.Text = "対象";
             // 
-            // tbTargetTags
-            // 
-            this.tbTargetTags.Location = new System.Drawing.Point(8, 68);
-            this.tbTargetTags.Name = "tbTargetTags";
-            this.tbTargetTags.Size = new System.Drawing.Size(151, 19);
-            this.tbTargetTags.TabIndex = 2;
-            this.tbTargetTags.Leave += new System.EventHandler(this.tbTargetTags_Leave);
-            // 
-            // lblTargetNotebook
-            // 
-            this.lblTargetNotebook.AutoSize = true;
-            this.lblTargetNotebook.Location = new System.Drawing.Point(6, 15);
-            this.lblTargetNotebook.Name = "lblTargetNotebook";
-            this.lblTargetNotebook.Size = new System.Drawing.Size(55, 12);
-            this.lblTargetNotebook.TabIndex = 5;
-            this.lblTargetNotebook.Text = "NoteBook";
-            // 
-            // lblTargetTag
-            // 
-            this.lblTargetTag.AutoSize = true;
-            this.lblTargetTag.Location = new System.Drawing.Point(6, 53);
-            this.lblTargetTag.Name = "lblTargetTag";
-            this.lblTargetTag.Size = new System.Drawing.Size(24, 12);
-            this.lblTargetTag.TabIndex = 7;
-            this.lblTargetTag.Text = "Tag";
-            // 
-            // cbTargetNotebook
-            // 
-            this.cbTargetNotebook.FormattingEnabled = true;
-            this.cbTargetNotebook.Location = new System.Drawing.Point(8, 30);
-            this.cbTargetNotebook.Name = "cbTargetNotebook";
-            this.cbTargetNotebook.Size = new System.Drawing.Size(151, 20);
-            this.cbTargetNotebook.TabIndex = 1;
-            this.cbTargetNotebook.SelectedIndexChanged += new System.EventHandler(this.cbTargetNotebook_SelectedIndexChanged);
-            // 
-            // btnAddPreset
-            // 
-            this.btnAddPreset.Location = new System.Drawing.Point(114, 426);
-            this.btnAddPreset.Name = "btnAddPreset";
-            this.btnAddPreset.Size = new System.Drawing.Size(75, 23);
-            this.btnAddPreset.TabIndex = 8;
-            this.btnAddPreset.Text = "追加";
-            this.btnAddPreset.UseVisualStyleBackColor = true;
-            this.btnAddPreset.Click += new System.EventHandler(this.btnAddPreset_Click);
-            // 
             // lblTargetURL
             // 
+            this.lblTargetURL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTargetURL.AutoSize = true;
             this.lblTargetURL.Location = new System.Drawing.Point(6, 90);
             this.lblTargetURL.Name = "lblTargetURL";
@@ -247,6 +219,56 @@
             this.tbTargetUrl.TabIndex = 3;
             this.tbTargetUrl.Leave += new System.EventHandler(this.tbTargetUrl_Leave);
             // 
+            // tbTargetTags
+            // 
+            this.tbTargetTags.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbTargetTags.Location = new System.Drawing.Point(8, 68);
+            this.tbTargetTags.Name = "tbTargetTags";
+            this.tbTargetTags.Size = new System.Drawing.Size(151, 19);
+            this.tbTargetTags.TabIndex = 2;
+            this.tbTargetTags.Leave += new System.EventHandler(this.tbTargetTags_Leave);
+            // 
+            // lblTargetNotebook
+            // 
+            this.lblTargetNotebook.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTargetNotebook.AutoSize = true;
+            this.lblTargetNotebook.Location = new System.Drawing.Point(6, 15);
+            this.lblTargetNotebook.Name = "lblTargetNotebook";
+            this.lblTargetNotebook.Size = new System.Drawing.Size(55, 12);
+            this.lblTargetNotebook.TabIndex = 5;
+            this.lblTargetNotebook.Text = "NoteBook";
+            // 
+            // lblTargetTag
+            // 
+            this.lblTargetTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTargetTag.AutoSize = true;
+            this.lblTargetTag.Location = new System.Drawing.Point(6, 53);
+            this.lblTargetTag.Name = "lblTargetTag";
+            this.lblTargetTag.Size = new System.Drawing.Size(24, 12);
+            this.lblTargetTag.TabIndex = 7;
+            this.lblTargetTag.Text = "Tag";
+            // 
+            // cbTargetNotebook
+            // 
+            this.cbTargetNotebook.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbTargetNotebook.FormattingEnabled = true;
+            this.cbTargetNotebook.Location = new System.Drawing.Point(8, 30);
+            this.cbTargetNotebook.Name = "cbTargetNotebook";
+            this.cbTargetNotebook.Size = new System.Drawing.Size(151, 20);
+            this.cbTargetNotebook.TabIndex = 1;
+            this.cbTargetNotebook.SelectedIndexChanged += new System.EventHandler(this.cbTargetNotebook_SelectedIndexChanged);
+            // 
+            // btnAddPreset
+            // 
+            this.btnAddPreset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddPreset.Location = new System.Drawing.Point(114, 426);
+            this.btnAddPreset.Name = "btnAddPreset";
+            this.btnAddPreset.Size = new System.Drawing.Size(75, 23);
+            this.btnAddPreset.TabIndex = 8;
+            this.btnAddPreset.Text = "追加";
+            this.btnAddPreset.UseVisualStyleBackColor = true;
+            this.btnAddPreset.Click += new System.EventHandler(this.btnAddPreset_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -258,6 +280,7 @@
             this.Controls.Add(this.btnDoSelectedAction);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
+            this.MaximizeBox = false;
             this.Name = "FormMain";
             this.ShowIcon = false;
             this.Text = "AutoOrganization";

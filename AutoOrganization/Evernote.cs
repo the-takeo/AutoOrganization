@@ -79,7 +79,6 @@ namespace AutoOrganization
             {
                 if (notebooks_ == null)
                 {
-
                     List<Notebook> notebooks = noteStore_.listNotebooks(authToken_);
 
                     Dictionary<string, string> notebookNames = new Dictionary<string, string>();
@@ -123,6 +122,7 @@ namespace AutoOrganization
 
         /// <summary>
         /// Notebookを移動する
+        /// Notebook移動のみという操作が今のところ無いので未使用
         /// </summary>
         /// <param name="note">対象Note</param>
         /// <param name="toNotebookName">移動先Notebook名称</param>
@@ -135,6 +135,7 @@ namespace AutoOrganization
 
         /// <summary>
         /// Tagを付加する
+        /// Tag付加のみという操作が今のところ無いので未使用
         /// </summary>
         /// <param name="note">対象Note</param>
         /// <param name="tagName">付加するTag名称</param>
@@ -193,7 +194,7 @@ namespace AutoOrganization
             noteFilter.NotebookGuid = Notebooks[targetNotebook];
 
             if (string.IsNullOrEmpty(targetTags) == false)
-                noteFilter.TagGuids = new List<string>() { Tags[targetTags] };
+                noteFilter.TagGuids = new List<string>(from targetTag in Tags where targetTags.Split(',').Contains(targetTag.Key) select targetTag.Value);
 
             var notesMetadataResultSpec = new NotesMetadataResultSpec();
             notesMetadataResultSpec.IncludeAttributes = true;
@@ -206,6 +207,7 @@ namespace AutoOrganization
             else
                 targetNoteMetadataList = from note in targetNotes.Notes select note;
 
+            int count = 0;
 
             foreach (var targetNoteData in targetNoteMetadataList)
             {
@@ -215,12 +217,22 @@ namespace AutoOrganization
                     targetNote.NotebookGuid = notebooks_[MoveNotebook];
 
                 if (isAddTags)
-                    targetNote.TagGuids.Add(Tags[addTags]);
-
-                noteStore_.updateNote(authToken_, targetNote);
+                {
+                    targetNote.TagGuids.AddRange(from addTag in Tags where addTags.Split(',').Contains(addTag.Key) select addTag.Value);
+                }
+                    
+                try
+                {
+                    noteStore_.updateNote(authToken_, targetNote);
+                    count++;
+                }
+                catch
+                {
+                    //未実装
+                }
             }
 
-            return targetNotes.Notes.Count;
+            return count;
         }
     }
 }
