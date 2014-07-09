@@ -79,11 +79,38 @@ namespace AutoOrganization {
         }
         
         /// <summary>
+        ///   {0}件のノートが対象となります。よろしいですか。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ConfirmAction {
+            get {
+                return ResourceManager.GetString("ConfirmAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アクション実行確認 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ConfirmActionTitle {
+            get {
+                return ResourceManager.GetString("ConfirmActionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   インターネットに接続されていないため、起動できません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string OffLineMsg {
             get {
                 return ResourceManager.GetString("OffLineMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0}ノート中{1}ノートを処理しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ProgressMsg {
+            get {
+                return ResourceManager.GetString("ProgressMsg", resourceCulture);
             }
         }
     }

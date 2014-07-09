@@ -100,14 +100,14 @@
             // logInIToolStripMenuItem
             // 
             this.logInIToolStripMenuItem.Name = "logInIToolStripMenuItem";
-            this.logInIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.logInIToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.logInIToolStripMenuItem.Text = "LogIn(&I)";
             this.logInIToolStripMenuItem.Click += new System.EventHandler(this.logInIToolStripMenuItem_Click);
             // 
             // closeCToolStripMenuItem
             // 
             this.closeCToolStripMenuItem.Name = "closeCToolStripMenuItem";
-            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.closeCToolStripMenuItem.Text = "Close(&C)";
             this.closeCToolStripMenuItem.Click += new System.EventHandler(this.closeCToolStripMenuItem_Click);
             // 

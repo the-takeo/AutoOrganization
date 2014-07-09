@@ -16,7 +16,7 @@ namespace AutoOrganization
     /// <summary>
     /// Evernote操作関連のクラス
     /// </summary>
-    class Evernote
+    public class Evernote
     {
         const string EvernoteHost = "sandbox.evernote.com";
         string authToken_;
@@ -139,9 +139,9 @@ namespace AutoOrganization
         /// </summary>
         /// <param name="note">対象Note</param>
         /// <param name="tagName">付加するTag名称</param>
-        private void AddTag(Note note,string tagName)
+        private void AddTag(Note note, string tagName)
         {
-            string tagGuid=Tags[tagName];
+            string tagGuid = Tags[tagName];
 
             if (note.TagGuids.Contains(tagGuid) == false)
                 note.TagGuids.Add(Tags[tagName]);
@@ -178,18 +178,15 @@ namespace AutoOrganization
         }
 
         /// <summary>
-        /// 条件に基づいた操作を行う
+        /// 条件に沿ったNoteのGuidのリストを返す
         /// </summary>
         /// <param name="targetNotebook">対象Notebook</param>
         /// <param name="targetTags">対象Tag</param>
-        /// <param name="isMoveNotebook">Notebookを移動するか</param>
-        /// <param name="MoveNotebook">移動先Notebook名称</param>
-        /// <param name="isAddTags">Tagを付加するか</param>
-        /// <param name="addTags">付加するTag名称</param>
-        /// <returns>操作が行われたNote数（操作前と変化がなかったNoteを含む）</returns>
-        public int DoAction(string targetNotebook, string targetTags, string targetURL,bool isMoveNotebook,
-            string MoveNotebook, bool isAddTags, string addTags)
+        /// <param name="targetURL">対象URL</param>
+        /// <returns>条件に沿ったNoteのGuidリスト</returns>
+        public List<string> GetFilteredNoteGuids(string targetNotebook, string targetTags, string targetURL)
         {
+
             NoteFilter noteFilter = new NoteFilter();
             noteFilter.NotebookGuid = Notebooks[targetNotebook];
 
@@ -201,38 +198,44 @@ namespace AutoOrganization
 
             var targetNotes = noteStore_.findNotesMetadata(authToken_, noteFilter, 0, 1000, notesMetadataResultSpec);
 
-            IEnumerable<NoteMetadata> targetNoteMetadataList;
+            IEnumerable<string> targetNoteGuidList;
             if (string.IsNullOrEmpty(targetURL) == false)
-                targetNoteMetadataList = from note in targetNotes.Notes where (note.Attributes.SourceURL != null) && note.Attributes.SourceURL.Contains(targetURL) select note;
+                targetNoteGuidList = from note in targetNotes.Notes where (note.Attributes.SourceURL != null) && note.Attributes.SourceURL.Contains(targetURL) select note.Guid;
             else
-                targetNoteMetadataList = from note in targetNotes.Notes select note;
+                targetNoteGuidList = from note in targetNotes.Notes select note.Guid;
 
-            int count = 0;
+            return new List<string>(targetNoteGuidList);
+        }
 
-            foreach (var targetNoteData in targetNoteMetadataList)
+        /// <summary>
+        /// 条件に基づいた操作を行う
+        /// </summary>
+        /// <param name="noteGuid">対象NoteのGuid</param>
+        /// <param name="isMoveNotebook">Notebookを移動するか</param>
+        /// <param name="moveNotebook">移動先Notebook名称</param>
+        /// <param name="isAddTags">Tagを付加するか</param>
+        /// <param name="addTags">付加するTag名称</param>
+        /// <returns>更新に成功したか</returns>
+        public bool DoAction(string noteGuid, bool isMoveNotebook, string moveNotebook, bool isAddTags, string addTags)
+        {
+            var targetNote = noteStore_.getNote(authToken_, noteGuid, false, false, false, false);
+
+            if (isMoveNotebook)
+                targetNote.NotebookGuid = notebooks_[moveNotebook];
+
+            if (isAddTags)
+                targetNote.TagGuids.AddRange(from addTag in Tags where addTags.Split(',').Contains(addTag.Key) select addTag.Value);
+
+            try
             {
-                var targetNote = noteStore_.getNote(authToken_, targetNoteData.Guid, false, false, false, false);
-
-                if (isMoveNotebook)
-                    targetNote.NotebookGuid = notebooks_[MoveNotebook];
-
-                if (isAddTags)
-                {
-                    targetNote.TagGuids.AddRange(from addTag in Tags where addTags.Split(',').Contains(addTag.Key) select addTag.Value);
-                }
-                    
-                try
-                {
-                    noteStore_.updateNote(authToken_, targetNote);
-                    count++;
-                }
-                catch
-                {
-                    //未実装
-                }
+                noteStore_.updateNote(authToken_, targetNote);
+            }
+            catch
+            {
+                return false;
             }
 
-            return count;
+            return true;
         }
     }
 }

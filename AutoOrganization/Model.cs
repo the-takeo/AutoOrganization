@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace AutoOrganization
 {
     [DataContract]
-    class Model
+    public class Model
     {
         [DataMember]
         DataTable dtPreset_;

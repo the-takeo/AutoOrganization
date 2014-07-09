@@ -148,15 +148,19 @@ namespace AutoOrganization
             string targetNotebook = dr["TargetNotebook"].ToString();
             string targetTags = dr["TargetTags"].ToString();
             string targetURL = dr["TargetURL"].ToString();
+
             bool isMoveNotebook = (bool)dr["IsMoveNotebook"];
-            string MoveNotebook = dr["MoveToNotebook"].ToString();
+            string moveNotebook = dr["MoveToNotebook"].ToString();
             bool isAddTags = (bool)dr["IsAddTags"];
             string addTags = dr["AddTags"].ToString();
 
-            int count = model_.Evernote.DoAction(targetNotebook, targetTags, targetURL,
-                isMoveNotebook, MoveNotebook, isAddTags, addTags);
+            List<string> targetNoteGuids = model_.Evernote.GetFilteredNoteGuids(targetNotebook, targetTags, targetURL);
 
-            MessageBox.Show(string.Format(Resource.ActionResultMsg, count.ToString()), Resource.ActionResultMsgTitle);
+            if (MessageBox.Show(string.Format(Resource.ConfirmAction, targetNoteGuids.Count.ToString()), Resource.ConfirmActionTitle, MessageBoxButtons.OKCancel) != DialogResult.OK)
+                return;
+
+            ProcessDialog processDialog = new ProcessDialog(targetNoteGuids, isMoveNotebook, moveNotebook, isAddTags, addTags, model_.Evernote);
+            processDialog.ShowDialog();
         }
 
         private void logInIToolStripMenuItem_Click(object sender, EventArgs e)
