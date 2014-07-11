@@ -150,34 +150,6 @@ namespace AutoOrganization
         }
 
         /// <summary>
-        /// フィルタしたNoteのGuidのリストを返す
-        /// </summary>
-        /// <param name="notebookName">対象Notebook</param>
-        /// <param name="tagName">対象Tag</param>
-        /// <param name="words">対象ワード</param>
-        /// <returns>NoteのGuidリスト</returns>
-        public List<string> GetTargetNoteGuids(string notebookName, string tagName = null, string words = null)
-        {
-            NoteFilter noteFilter = new NoteFilter();
-            noteFilter.NotebookGuid = Notebooks[notebookName];
-
-            if (tagName != null)
-                noteFilter.TagGuids.Add(Tags[tagName]);
-
-            if (words != null)
-                noteFilter.Words = words;
-
-            var notes = noteStore_.findNotesMetadata(authToken_, noteFilter, 0, 1000, new NotesMetadataResultSpec());
-            var result = new List<string>();
-            foreach (var note in notes.Notes)
-            {
-                result.Add(note.Guid);
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// 条件に沿ったNoteのGuidのリストを返す
         /// </summary>
         /// <param name="targetNotebook">対象Notebook</param>
@@ -196,15 +168,26 @@ namespace AutoOrganization
             var notesMetadataResultSpec = new NotesMetadataResultSpec();
             notesMetadataResultSpec.IncludeAttributes = true;
 
-            var targetNotes = noteStore_.findNotesMetadata(authToken_, noteFilter, 0, 1000, notesMetadataResultSpec);
+            var result = new List<string>();
+            var targetNotes = noteStore_.findNotesMetadata(authToken_, noteFilter, 0, 10000, notesMetadataResultSpec);
 
-            IEnumerable<string> targetNoteGuidList;
-            if (string.IsNullOrEmpty(targetURL) == false)
-                targetNoteGuidList = from note in targetNotes.Notes where (note.Attributes.SourceURL != null) && note.Attributes.SourceURL.Contains(targetURL) select note.Guid;
-            else
-                targetNoteGuidList = from note in targetNotes.Notes select note.Guid;
+            // findNotesMetadataは一度に250件までしかNOteを取得できないので、分割して取得する。
+            int count = (targetNotes.TotalNotes / 250) + 1;
+            for (int i = 0; i < count; i++)
+            {
+                targetNotes = noteStore_.findNotesMetadata(authToken_, noteFilter, 250 * i, 10000, notesMetadataResultSpec);
 
-            return new List<string>(targetNoteGuidList);
+                IEnumerable<string> targetNoteGuidList;
+                if (string.IsNullOrEmpty(targetURL) == false)
+                    targetNoteGuidList = from note in targetNotes.Notes where (note.Attributes.SourceURL != null) &&
+                                             note.Attributes.SourceURL.Contains(targetURL) select note.Guid;
+                else
+                    targetNoteGuidList = from note in targetNotes.Notes select note.Guid;
+
+                result.AddRange(targetNoteGuidList);
+            }
+
+            return result;
         }
 
         /// <summary>

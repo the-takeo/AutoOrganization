@@ -12,7 +12,6 @@ namespace AutoOrganization
 {
     public partial class RenameDialog : Form
     {
-        DataRow dr_;
         List<string> names_;
         string oldName_;
 
