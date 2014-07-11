@@ -113,5 +113,14 @@ namespace AutoOrganization {
                 return ResourceManager.GetString("ProgressMsg", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   既に同名のアクションが存在します。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string StillExistID {
+            get {
+                return ResourceManager.GetString("StillExistID", resourceCulture);
+            }
+        }
     }
 }

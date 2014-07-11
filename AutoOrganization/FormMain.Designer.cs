@@ -77,6 +77,7 @@
             this.lbPreset.Size = new System.Drawing.Size(177, 388);
             this.lbPreset.TabIndex = 0;
             this.lbPreset.SelectedIndexChanged += new System.EventHandler(this.lbPreset_SelectedIndexChanged);
+            this.lbPreset.DoubleClick += new System.EventHandler(this.lbPreset_DoubleClick);
             // 
             // menuStrip
             // 

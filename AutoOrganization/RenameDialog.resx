@@ -117,25 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActionResultMsg" xml:space="preserve">
-    <value>{0}件のノートが処理されました。</value>
-  </data>
-  <data name="ActionResultMsgTitle" xml:space="preserve">
-    <value>アクション実行結果</value>
-  </data>
-  <data name="ConfirmAction" xml:space="preserve">
-    <value>{0}件のノートが対象となります。よろしいですか。</value>
-  </data>
-  <data name="ConfirmActionTitle" xml:space="preserve">
-    <value>アクション実行確認</value>
-  </data>
-  <data name="OffLineMsg" xml:space="preserve">
-    <value>インターネットに接続されていないため、起動できません。</value>
-  </data>
-  <data name="ProgressMsg" xml:space="preserve">
-    <value>{0}ノート中{1}ノートを処理しました。</value>
-  </data>
-  <data name="StillExistID" xml:space="preserve">
-    <value>既に同名のアクションが存在します。</value>
-  </data>
 </root>

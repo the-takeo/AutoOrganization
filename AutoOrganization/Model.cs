@@ -65,6 +65,15 @@ namespace AutoOrganization
             set { evernoteAuthToken_ = value; }
         }
 
+        public List<string> IDs
+        {
+            get
+            {
+                List<string> test = Presets.AsEnumerable().Select(n => n["ID"].ToString()).ToList();
+                return test;
+            }
+        }
+
         public void RefleshEvernoteClass()
         {
             evernote_ = new Evernote(EvernoteAuthToken);
@@ -74,23 +83,11 @@ namespace AutoOrganization
         {
             var newPreset = dtPreset_.NewRow();
 
-            bool isContain = true;
-            int count = 0;
+            int count = 1;
 
-            while (isContain)
+            while (true)
             {
-                isContain = false;
-
-                for (int j = 0; j < dtPreset_.Rows.Count; j++)
-                {
-                    if (dtPreset_.Rows[j]["ID"].ToString() == "新規プリセット" + count.ToString())
-                    {
-                        isContain = true;
-                        break;
-                    }
-                }
-
-                if (isContain == false)
+                if (dtPreset_.AsEnumerable().Select(n => n["ID"].ToString()).Contains("新規プリセット" + count.ToString()) == false)
                 {
                     newPreset["ID"] = "新規プリセット" + count.ToString();
                     break;
@@ -126,6 +123,17 @@ namespace AutoOrganization
             dr["MoveToNotebook"] = moveToNotebook;
             dr["IsAddTags"] = isAddTags;
             dr["AddTags"] = AddTags;
+
+            dtPreset_.AcceptChanges();
+
+            Save();
+        }
+
+        public void RenameAction(int index,string newName)
+        {
+            DataRow dr = dtPreset_.Rows[index];
+
+            dr["ID"] = newName;
 
             dtPreset_.AcceptChanges();
 

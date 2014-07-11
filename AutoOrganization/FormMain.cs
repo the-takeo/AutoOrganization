@@ -225,5 +225,19 @@ namespace AutoOrganization
         {
             Close();
         }
+
+        private void lbPreset_DoubleClick(object sender, EventArgs e)
+        {
+            int index = ((ListBox)sender).SelectedIndex;
+
+            RenameDialog rd = new RenameDialog(model_.Presets.Rows[index]["ID"].ToString(), model_.IDs);
+            rd.ShowDialog();
+
+            if (rd.DialogResult == DialogResult.OK)
+            {
+                model_.RenameAction(index, rd.NewName);
+                _refleshLbPresets();
+            }
+        }
     }
 }
