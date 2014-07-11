@@ -48,6 +48,7 @@
             this.lblTargetTag = new System.Windows.Forms.Label();
             this.cbTargetNotebook = new System.Windows.Forms.ComboBox();
             this.btnAddPreset = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbAction.SuspendLayout();
@@ -262,7 +263,7 @@
             // btnAddPreset
             // 
             this.btnAddPreset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddPreset.Location = new System.Drawing.Point(114, 426);
+            this.btnAddPreset.Location = new System.Drawing.Point(12, 426);
             this.btnAddPreset.Name = "btnAddPreset";
             this.btnAddPreset.Size = new System.Drawing.Size(75, 23);
             this.btnAddPreset.TabIndex = 8;
@@ -270,11 +271,22 @@
             this.btnAddPreset.UseVisualStyleBackColor = true;
             this.btnAddPreset.Click += new System.EventHandler(this.btnAddPreset_Click);
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(114, 426);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 10;
+            this.btnDelete.Text = "削除";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 461);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAddPreset);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lbPreset);
@@ -319,6 +331,7 @@
         private System.Windows.Forms.ToolStripMenuItem logInIToolStripMenuItem;
         private System.Windows.Forms.Label lblTargetURL;
         private System.Windows.Forms.TextBox tbTargetUrl;
+        private System.Windows.Forms.Button btnDelete;
     }
 }
 

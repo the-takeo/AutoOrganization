@@ -111,6 +111,15 @@ namespace AutoOrganization
             Save();
         }
 
+        public void DeletePreset(int index)
+        {
+            dtPreset_.Rows.RemoveAt(index);
+
+            dtPreset_.AcceptChanges();
+
+            Save();
+        }
+
         public void UpdatePreset(int index,string targetNotebook,string targetTags,string targetURL,
             bool isMoveNotebook,string moveToNotebook,bool isAddTags,string AddTags)
         {

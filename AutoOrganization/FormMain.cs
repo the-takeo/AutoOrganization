@@ -89,6 +89,12 @@ namespace AutoOrganization
             _refleshLbPresets();
         }
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            model_.DeletePreset(lbPreset.SelectedIndex);
+            _refleshLbPresets();
+        }
+
         private void lbPreset_SelectedIndexChanged(object sender, EventArgs e)
         {
             isChangeSelectedBySystem = true;
@@ -182,7 +188,34 @@ namespace AutoOrganization
                 lbPreset.Items.Add(model_.Presets.Rows[i]["ID"].ToString());
             }
 
-            lbPreset.SelectedIndex = selectedIndex;
+            if (lbPreset.Items.Count == 0)
+            {
+                btnDelete.Enabled = false;
+                cbTargetNotebook.Enabled = false;
+                tbTargetTags.Enabled = false;
+                tbTargetUrl.Enabled = false;
+                cbMoteToNotebook.Enabled = false;
+                chbMoveToNotebook.Enabled = false;
+                tbAddTags.Enabled = false;
+                chbAddTags.Enabled = false;
+                btnDoSelectedAction.Enabled = false;
+                return;
+            }
+
+            else if (selectedIndex >= lbPreset.Items.Count)
+                lbPreset.SelectedIndex = selectedIndex - 1;
+            else
+                lbPreset.SelectedIndex = selectedIndex;
+
+            btnDelete.Enabled = true;
+            cbTargetNotebook.Enabled = true;
+            tbTargetTags.Enabled = true;
+            tbTargetUrl.Enabled = true;
+            cbMoteToNotebook.Enabled = true;
+            chbMoveToNotebook.Enabled = true;
+            tbAddTags.Enabled = true;
+            chbAddTags.Enabled = true;
+            btnDoSelectedAction.Enabled = true;
         }
 
         /// <summary>
