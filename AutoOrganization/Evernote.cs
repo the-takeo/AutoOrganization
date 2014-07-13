@@ -104,20 +104,28 @@ namespace AutoOrganization
             {
                 if (tags_ == null)
                 {
-                    List<Tag> tags = noteStore_.listTags(authToken_);
-
-                    Dictionary<string, string> tagNames = new Dictionary<string, string>();
-
-                    foreach (var tag in tags)
-                    {
-                        tagNames.Add(tag.Name, tag.Guid);
-                    }
-
-                    tags_ = tagNames;
+                    RefleshTags();
                 }
 
                 return tags_;
             }
+        }
+
+        /// <summary>
+        /// Tag情報のキャッシュを更新する
+        /// </summary>
+        private void RefleshTags()
+        {
+            List<Tag> tags = noteStore_.listTags(authToken_);
+
+            Dictionary<string, string> tagNames = new Dictionary<string, string>();
+
+            foreach (var tag in tags)
+            {
+                tagNames.Add(tag.Name, tag.Guid);
+            }
+
+            tags_ = tagNames;
         }
 
         /// <summary>
@@ -158,12 +166,16 @@ namespace AutoOrganization
         /// <returns>条件に沿ったNoteのGuidリスト</returns>
         public List<string> GetFilteredNoteGuids(string targetNotebook, string targetTags, string targetURL)
         {
-
             NoteFilter noteFilter = new NoteFilter();
             noteFilter.NotebookGuid = Notebooks[targetNotebook];
 
             if (string.IsNullOrEmpty(targetTags) == false)
+            {
                 noteFilter.TagGuids = new List<string>(from targetTag in Tags where targetTags.Split(',').Contains(targetTag.Key) select targetTag.Value);
+
+                //指定したTagが存在しない場合、該当なしなのでからのリストを返す
+                if (noteFilter.TagGuids.Count == 0) return new List<string>();
+            }
 
             var notesMetadataResultSpec = new NotesMetadataResultSpec();
             notesMetadataResultSpec.IncludeAttributes = true;
@@ -204,11 +216,29 @@ namespace AutoOrganization
             var targetNote = noteStore_.getNote(authToken_, noteGuid, false, false, false, false);
 
             if (isMoveNotebook)
-                targetNote.NotebookGuid = notebooks_[moveNotebook];
+                targetNote.NotebookGuid = Notebooks[moveNotebook];
 
             if (isAddTags)
-                targetNote.TagGuids.AddRange(from addTag in Tags where addTags.Split(',').Contains(addTag.Key) select addTag.Value);
+            {
+                //Tagが存在しない場合、作成する
+                foreach (var addTag in addTags.Split(','))
+                {
+                    if (Tags.ContainsKey(addTag) == false)
+                    {
+                        Tag newTag = new Tag();
+                        newTag.Name = addTag;
 
+                        noteStore_.createTag(authToken_, newTag);
+
+                        RefleshTags();
+                    }
+                }
+
+                if (targetNote.TagGuids == null)
+                    targetNote.TagGuids = new List<string>();
+
+                targetNote.TagGuids.AddRange(from addTag in Tags where addTags.Split(',').Contains(addTag.Key) select addTag.Value);
+            }
             try
             {
                 noteStore_.updateNote(authToken_, targetNote);

@@ -49,6 +49,7 @@
             this.cbTargetNotebook = new System.Windows.Forms.ComboBox();
             this.btnAddPreset = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.abountApplicationAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbAction.SuspendLayout();
@@ -83,7 +84,8 @@
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileFToolStripMenuItem});
+            this.fileFToolStripMenuItem,
+            this.abountApplicationAToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(384, 24);
@@ -102,14 +104,14 @@
             // logInIToolStripMenuItem
             // 
             this.logInIToolStripMenuItem.Name = "logInIToolStripMenuItem";
-            this.logInIToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.logInIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.logInIToolStripMenuItem.Text = "LogIn(&I)";
             this.logInIToolStripMenuItem.Click += new System.EventHandler(this.logInIToolStripMenuItem_Click);
             // 
             // closeCToolStripMenuItem
             // 
             this.closeCToolStripMenuItem.Name = "closeCToolStripMenuItem";
-            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.closeCToolStripMenuItem.Text = "Close(&C)";
             this.closeCToolStripMenuItem.Click += new System.EventHandler(this.closeCToolStripMenuItem_Click);
             // 
@@ -281,6 +283,13 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // abountApplicationAToolStripMenuItem
+            // 
+            this.abountApplicationAToolStripMenuItem.Name = "abountApplicationAToolStripMenuItem";
+            this.abountApplicationAToolStripMenuItem.Size = new System.Drawing.Size(145, 20);
+            this.abountApplicationAToolStripMenuItem.Text = "Abount Application(&A)";
+            this.abountApplicationAToolStripMenuItem.Click += new System.EventHandler(this.abountApplicationAToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -332,6 +341,7 @@
         private System.Windows.Forms.Label lblTargetURL;
         private System.Windows.Forms.TextBox tbTargetUrl;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.ToolStripMenuItem abountApplicationAToolStripMenuItem;
     }
 }
 

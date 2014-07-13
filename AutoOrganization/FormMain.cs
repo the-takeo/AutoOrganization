@@ -272,5 +272,11 @@ namespace AutoOrganization
                 _refleshLbPresets();
             }
         }
+
+        private void abountApplicationAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox ab = new AboutBox();
+            ab.ShowDialog();
+        }
     }
 }
