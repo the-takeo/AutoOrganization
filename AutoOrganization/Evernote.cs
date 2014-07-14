@@ -98,7 +98,7 @@ namespace AutoOrganization
         /// <summary>
         /// EvernoteのTag情報
         /// </summary>
-        private Dictionary<string, string> Tags
+        public Dictionary<string, string> Tags
         {
             get
             {
@@ -129,32 +129,17 @@ namespace AutoOrganization
         }
 
         /// <summary>
-        /// Notebookを移動する
-        /// Notebook移動のみという操作が今のところ無いので未使用
+        /// 新規Tagを追加する
         /// </summary>
-        /// <param name="note">対象Note</param>
-        /// <param name="toNotebookName">移動先Notebook名称</param>
-        private void MoveNote(Note note, string toNotebookName)
+        /// <param name="newTagName">追加Tag名称</param>
+        public void AddNewTag(string newTagName)
         {
-            note.NotebookGuid = Notebooks[toNotebookName];
+            Tag newTag = new Tag();
+            newTag.Name = newTagName;
 
-            noteStore_.updateNote(authToken_, note);
-        }
+            noteStore_.createTag(authToken_, newTag);
 
-        /// <summary>
-        /// Tagを付加する
-        /// Tag付加のみという操作が今のところ無いので未使用
-        /// </summary>
-        /// <param name="note">対象Note</param>
-        /// <param name="tagName">付加するTag名称</param>
-        private void AddTag(Note note, string tagName)
-        {
-            string tagGuid = Tags[tagName];
-
-            if (note.TagGuids.Contains(tagGuid) == false)
-                note.TagGuids.Add(Tags[tagName]);
-
-            noteStore_.updateNote(authToken_, note);
+            RefleshTags();
         }
 
         /// <summary>
@@ -220,20 +205,6 @@ namespace AutoOrganization
 
             if (isAddTags)
             {
-                //Tagが存在しない場合、作成する
-                foreach (var addTag in addTags.Split(','))
-                {
-                    if (Tags.ContainsKey(addTag) == false)
-                    {
-                        Tag newTag = new Tag();
-                        newTag.Name = addTag;
-
-                        noteStore_.createTag(authToken_, newTag);
-
-                        RefleshTags();
-                    }
-                }
-
                 if (targetNote.TagGuids == null)
                     targetNote.TagGuids = new List<string>();
 

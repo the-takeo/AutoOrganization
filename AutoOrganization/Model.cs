@@ -156,5 +156,26 @@ namespace AutoOrganization
             serializer.WriteObject(fs, this);
             fs.Close();
         }
+
+        public List<string> GetFilteredNoteGuids(string actionName)
+        {
+            DataRow dr = Presets.Rows.Find(actionName);
+
+            string targetNotebook = dr["TargetNotebook"].ToString();
+            string targetTags = dr["TargetTags"].ToString();
+            string targetURL = dr["TargetURL"].ToString();
+
+            return Evernote.GetFilteredNoteGuids(targetNotebook, targetTags, targetURL);
+        }
+
+        public void ActionParams(string actionName, out bool isMoveNotebook, out string moveNotebook, out bool isAddTags, out string addTags)
+        {
+            DataRow dr = Presets.Rows.Find(actionName);
+
+            isMoveNotebook = (bool)dr["IsMoveNotebook"];
+            moveNotebook = dr["MoveToNotebook"].ToString();
+            isAddTags = (bool)dr["IsAddTags"];
+            addTags = dr["AddTags"].ToString();
+        }
     }
 }

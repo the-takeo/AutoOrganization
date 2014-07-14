@@ -149,8 +149,40 @@ namespace AutoOrganization
 
         private void btnDoSelectedAction_Click(object sender, EventArgs e)
         {
-            DataRow dr = model_.Presets.Rows[lbPreset.SelectedIndex];
+            string actionName=lbPreset.SelectedItem.ToString();
 
+            List<string> targetNoteGuids = model_.GetFilteredNoteGuids(actionName);
+
+            if (MessageBox.Show(string.Format(Resource.ConfirmAction, targetNoteGuids.Count.ToString()), Resource.ConfirmActionTitle, MessageBoxButtons.OKCancel) != DialogResult.OK)
+                return;
+
+            bool isMoveNotebook;
+            string moveNotebook;
+            bool isAddTags;
+            string addTags;
+
+            model_.ActionParams(actionName, out isMoveNotebook, out moveNotebook, out isAddTags, out addTags);
+
+            //既存Tagでない場合、Tagの追加を行う
+            if (isAddTags)
+            {
+                foreach (var addTag in addTags.Split(','))
+                {
+                    if (model_.Evernote.Tags.ContainsKey(addTag) == false)
+                        model_.Evernote.AddNewTag(addTag);
+                }
+            }
+
+            ProcessDialog processDialog = new ProcessDialog(targetNoteGuids, isMoveNotebook, moveNotebook, isAddTags, addTags, model_.Evernote);
+            processDialog.ShowDialog();
+        }
+
+        /// <summary>
+        /// 指定したアクションを実行する
+        /// </summary>
+        /// <param name="dr">指定アクション情報</param>
+        public void DoAction(DataRow dr)
+        {
             string targetNotebook = dr["TargetNotebook"].ToString();
             string targetTags = dr["TargetTags"].ToString();
             string targetURL = dr["TargetURL"].ToString();
@@ -165,10 +197,21 @@ namespace AutoOrganization
             if (MessageBox.Show(string.Format(Resource.ConfirmAction, targetNoteGuids.Count.ToString()), Resource.ConfirmActionTitle, MessageBoxButtons.OKCancel) != DialogResult.OK)
                 return;
 
+            //既存Tagでない場合、Tagの追加を行う
+            if (isAddTags)
+            {
+                foreach (var addTag in addTags.Split(','))
+                {
+                    if (model_.Evernote.Tags.ContainsKey(addTag) == false)
+                        model_.Evernote.AddNewTag(addTag);
+                }
+            }
+
             ProcessDialog processDialog = new ProcessDialog(targetNoteGuids, isMoveNotebook, moveNotebook, isAddTags, addTags, model_.Evernote);
             processDialog.ShowDialog();
         }
 
+        
         private void logInIToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string token;
