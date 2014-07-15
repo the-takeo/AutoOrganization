@@ -286,7 +286,7 @@ namespace AutoOrganization
         {
             token = string.Empty;
 
-            EvernoteOA oauth = new EvernoteOA(EvernoteOA.HostService.Sandbox);
+            EvernoteOA oauth = new EvernoteOA(EvernoteOA.HostService.Production);
 
             if (oauth.doAuth(ConsumerKey.consumerKey, ConsumerKey.consumerSecret))
             {

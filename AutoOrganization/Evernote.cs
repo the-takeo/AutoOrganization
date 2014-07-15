@@ -18,7 +18,7 @@ namespace AutoOrganization
     /// </summary>
     public class Evernote
     {
-        const string EvernoteHost = "sandbox.evernote.com";
+        const string EvernoteHost = "www.evernote.com";
         string authToken_;
         UserStore.Client userStore_;
         NoteStore.Client noteStore_;
