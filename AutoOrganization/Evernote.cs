@@ -59,7 +59,12 @@ namespace AutoOrganization
         /// </summary>
         public List<string> Notebooknames
         {
-            get { return new List<string>(Notebooks.Keys.ToArray().Reverse()); }
+            get 
+            {
+                List<string> result = new List<string>(Notebooks.Keys.ToArray());
+                result.Sort(StringComparer.CurrentCulture);
+                return result;
+            }
         }
 
         /// <summary>

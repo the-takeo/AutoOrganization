@@ -29,7 +29,7 @@ namespace AutoOrganization
             {
                 System.Runtime.Serialization.DataContractSerializer serializer = new System.Runtime.Serialization.DataContractSerializer(typeof(Model));
 
-                FileStream fs = new FileStream(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + @"\AutoSettings.xml", FileMode.Open);
+                FileStream fs = new FileStream(@"Settings.xml", FileMode.Open);
 
                 model_ = (Model)serializer.ReadObject(fs);
 
@@ -73,83 +73,83 @@ namespace AutoOrganization
             cbTargetNotebook.Items.AddRange(model_.Evernote.Notebooknames.ToArray());
             cbMoteToNotebook.Items.AddRange(model_.Evernote.Notebooknames.ToArray());
 
-            if (model_.Presets.Rows.Count == 0)
-                model_.AddNewPreset();
+            if (model_.Actions.Rows.Count == 0)
+                model_.AddNewAction();
 
-            _refleshLbPresets();
+            _refleshLbActions();
 
-            lbPreset.SelectedIndex = 0;
+            lbAction.SelectedIndex = 0;
 
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
         }
 
-        private void btnAddPreset_Click(object sender, EventArgs e)
+        private void btnAddAction_Click(object sender, EventArgs e)
         {
-            model_.AddNewPreset();
-            _refleshLbPresets();
+            model_.AddNewAction();
+            _refleshLbActions();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            model_.DeletePreset(lbPreset.SelectedIndex);
-            _refleshLbPresets();
+            model_.DeleteAction(lbAction.SelectedIndex);
+            _refleshLbActions();
         }
 
-        private void lbPreset_SelectedIndexChanged(object sender, EventArgs e)
+        private void lbAction_SelectedIndexChanged(object sender, EventArgs e)
         {
             isChangeSelectedBySystem = true;
 
             int selectedIndex = ((ListBox)sender).SelectedIndex;
 
-            cbTargetNotebook.SelectedItem = model_.Presets.Rows[selectedIndex]["TargetNotebook"];
-            tbTargetTags.Text = model_.Presets.Rows[selectedIndex]["TargetTags"].ToString();
-            tbTargetUrl.Text = model_.Presets.Rows[selectedIndex]["TargetURL"].ToString();
-            chbMoveToNotebook.Checked = (bool)model_.Presets.Rows[selectedIndex]["IsMoveNotebook"];
-            cbMoteToNotebook.SelectedItem = model_.Presets.Rows[selectedIndex]["MoveToNotebook"];
-            chbAddTags.Checked = (bool)model_.Presets.Rows[selectedIndex]["IsAddTags"];
-            tbAddTags.Text = model_.Presets.Rows[selectedIndex]["AddTags"].ToString();
+            cbTargetNotebook.SelectedItem = model_.Actions.Rows[selectedIndex]["TargetNotebook"];
+            tbTargetTags.Text = model_.Actions.Rows[selectedIndex]["TargetTags"].ToString();
+            tbTargetUrl.Text = model_.Actions.Rows[selectedIndex]["TargetURL"].ToString();
+            chbMoveToNotebook.Checked = (bool)model_.Actions.Rows[selectedIndex]["IsMoveNotebook"];
+            cbMoteToNotebook.SelectedItem = model_.Actions.Rows[selectedIndex]["MoveToNotebook"];
+            chbAddTags.Checked = (bool)model_.Actions.Rows[selectedIndex]["IsAddTags"];
+            tbAddTags.Text = model_.Actions.Rows[selectedIndex]["AddTags"].ToString();
 
             isChangeSelectedBySystem = false;
         }
 
         private void cbTargetNotebook_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _updatePreset();
+            _updateAction();
         }
 
         private void chbMoveToNotebook_CheckedChanged(object sender, EventArgs e)
         {
-            _updatePreset();
+            _updateAction();
         }
 
         private void cbMoteToNotebook_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _updatePreset();
+            _updateAction();
         }
 
         private void chbAddTags_CheckedChanged(object sender, EventArgs e)
         {
-            _updatePreset();
+            _updateAction();
         }
 
         private void tbTargetUrl_Leave(object sender, EventArgs e)
         {
-            _updatePreset();
+            _updateAction();
         }
 
         private void tbTargetTags_Leave(object sender, EventArgs e)
         {
-            _updatePreset();
+            _updateAction();
         }
 
         private void tbAddTags_Leave(object sender, EventArgs e)
         {
-            _updatePreset();
+            _updateAction();
         }
 
         private void btnDoSelectedAction_Click(object sender, EventArgs e)
         {
-            string actionName=lbPreset.SelectedItem.ToString();
+            string actionName=lbAction.SelectedItem.ToString();
 
             List<string> targetNoteGuids = model_.GetFilteredNoteGuids(actionName);
 
@@ -221,19 +221,19 @@ namespace AutoOrganization
         /// <summary>
         /// ActionリストをModelに基づいて更新する
         /// </summary>
-        private void _refleshLbPresets()
+        private void _refleshLbActions()
         {
-            int selectedIndex = lbPreset.SelectedIndex;
+            int selectedIndex = lbAction.SelectedIndex;
 
-            lbPreset.Items.Clear();
-            for (int i = 0; i < model_.Presets.Rows.Count; i++)
+            lbAction.Items.Clear();
+            for (int i = 0; i < model_.Actions.Rows.Count; i++)
             {
-                lbPreset.Items.Add(model_.Presets.Rows[i]["ID"].ToString());
+                lbAction.Items.Add(model_.Actions.Rows[i]["ID"].ToString());
             }
 
-            if (lbPreset.Items.Count == 0)
+            if (lbAction.Items.Count == 0)
             {
-                btnDelete.Enabled = false;
+                btnDeleteAction.Enabled = false;
                 cbTargetNotebook.Enabled = false;
                 tbTargetTags.Enabled = false;
                 tbTargetUrl.Enabled = false;
@@ -245,12 +245,12 @@ namespace AutoOrganization
                 return;
             }
 
-            else if (selectedIndex >= lbPreset.Items.Count)
-                lbPreset.SelectedIndex = selectedIndex - 1;
+            else if (selectedIndex >= lbAction.Items.Count)
+                lbAction.SelectedIndex = selectedIndex - 1;
             else
-                lbPreset.SelectedIndex = selectedIndex;
+                lbAction.SelectedIndex = selectedIndex;
 
-            btnDelete.Enabled = true;
+            btnDeleteAction.Enabled = true;
             cbTargetNotebook.Enabled = true;
             tbTargetTags.Enabled = true;
             tbTargetUrl.Enabled = true;
@@ -264,7 +264,7 @@ namespace AutoOrganization
         /// <summary>
         /// 選択されているActionを入力されている情報に基いて更新する
         /// </summary>
-        private void _updatePreset()
+        private void _updateAction()
         {
             if (isChangeSelectedBySystem)
                 return;
@@ -272,7 +272,7 @@ namespace AutoOrganization
             if (cbTargetNotebook.SelectedItem == null || cbMoteToNotebook.SelectedItem == null)
                 return;
 
-            model_.UpdatePreset(lbPreset.SelectedIndex, cbTargetNotebook.SelectedItem.ToString(),
+            model_.UpdateAction(lbAction.SelectedIndex, cbTargetNotebook.SelectedItem.ToString(),
                 tbTargetTags.Text,tbTargetUrl.Text, chbMoveToNotebook.Checked, cbMoteToNotebook.SelectedItem.ToString(),
                 chbAddTags.Checked, tbAddTags.Text);
         }
@@ -302,17 +302,17 @@ namespace AutoOrganization
             Close();
         }
 
-        private void lbPreset_DoubleClick(object sender, EventArgs e)
+        private void lbAction_DoubleClick(object sender, EventArgs e)
         {
             int index = ((ListBox)sender).SelectedIndex;
 
-            RenameDialog rd = new RenameDialog(model_.Presets.Rows[index]["ID"].ToString(), model_.IDs);
+            RenameDialog rd = new RenameDialog(model_.Actions.Rows[index]["ID"].ToString(), model_.IDs);
             rd.ShowDialog();
 
             if (rd.DialogResult == DialogResult.OK)
             {
                 model_.RenameAction(index, rd.NewName);
-                _refleshLbPresets();
+                _refleshLbActions();
             }
         }
 

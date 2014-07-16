@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.btnDoSelectedAction = new System.Windows.Forms.Button();
-            this.lbPreset = new System.Windows.Forms.ListBox();
+            this.lbAction = new System.Windows.Forms.ListBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logInIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.abountApplicationAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.gbAction = new System.Windows.Forms.GroupBox();
             this.tbAddTags = new System.Windows.Forms.TextBox();
@@ -47,9 +48,8 @@
             this.lblTargetNotebook = new System.Windows.Forms.Label();
             this.lblTargetTag = new System.Windows.Forms.Label();
             this.cbTargetNotebook = new System.Windows.Forms.ComboBox();
-            this.btnAddPreset = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.abountApplicationAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnAddAction = new System.Windows.Forms.Button();
+            this.btnDeleteAction = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbAction.SuspendLayout();
@@ -67,19 +67,19 @@
             this.btnDoSelectedAction.UseVisualStyleBackColor = true;
             this.btnDoSelectedAction.Click += new System.EventHandler(this.btnDoSelectedAction_Click);
             // 
-            // lbPreset
+            // lbAction
             // 
-            this.lbPreset.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lbAction.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbPreset.FormattingEnabled = true;
-            this.lbPreset.ItemHeight = 12;
-            this.lbPreset.Location = new System.Drawing.Point(12, 27);
-            this.lbPreset.Name = "lbPreset";
-            this.lbPreset.Size = new System.Drawing.Size(177, 388);
-            this.lbPreset.TabIndex = 0;
-            this.lbPreset.SelectedIndexChanged += new System.EventHandler(this.lbPreset_SelectedIndexChanged);
-            this.lbPreset.DoubleClick += new System.EventHandler(this.lbPreset_DoubleClick);
+            this.lbAction.FormattingEnabled = true;
+            this.lbAction.ItemHeight = 12;
+            this.lbAction.Location = new System.Drawing.Point(12, 27);
+            this.lbAction.Name = "lbAction";
+            this.lbAction.Size = new System.Drawing.Size(177, 388);
+            this.lbAction.TabIndex = 0;
+            this.lbAction.SelectedIndexChanged += new System.EventHandler(this.lbAction_SelectedIndexChanged);
+            this.lbAction.DoubleClick += new System.EventHandler(this.lbAction_DoubleClick);
             // 
             // menuStrip
             // 
@@ -104,16 +104,23 @@
             // logInIToolStripMenuItem
             // 
             this.logInIToolStripMenuItem.Name = "logInIToolStripMenuItem";
-            this.logInIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.logInIToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.logInIToolStripMenuItem.Text = "LogIn(&I)";
             this.logInIToolStripMenuItem.Click += new System.EventHandler(this.logInIToolStripMenuItem_Click);
             // 
             // closeCToolStripMenuItem
             // 
             this.closeCToolStripMenuItem.Name = "closeCToolStripMenuItem";
-            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeCToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.closeCToolStripMenuItem.Text = "Close(&C)";
             this.closeCToolStripMenuItem.Click += new System.EventHandler(this.closeCToolStripMenuItem_Click);
+            // 
+            // abountApplicationAToolStripMenuItem
+            // 
+            this.abountApplicationAToolStripMenuItem.Name = "abountApplicationAToolStripMenuItem";
+            this.abountApplicationAToolStripMenuItem.Size = new System.Drawing.Size(145, 20);
+            this.abountApplicationAToolStripMenuItem.Text = "Abount Application(&A)";
+            this.abountApplicationAToolStripMenuItem.Click += new System.EventHandler(this.abountApplicationAToolStripMenuItem_Click);
             // 
             // groupBox1
             // 
@@ -262,43 +269,36 @@
             this.cbTargetNotebook.TabIndex = 1;
             this.cbTargetNotebook.SelectedIndexChanged += new System.EventHandler(this.cbTargetNotebook_SelectedIndexChanged);
             // 
-            // btnAddPreset
+            // btnAddAction
             // 
-            this.btnAddPreset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddPreset.Location = new System.Drawing.Point(12, 426);
-            this.btnAddPreset.Name = "btnAddPreset";
-            this.btnAddPreset.Size = new System.Drawing.Size(75, 23);
-            this.btnAddPreset.TabIndex = 8;
-            this.btnAddPreset.Text = "追加";
-            this.btnAddPreset.UseVisualStyleBackColor = true;
-            this.btnAddPreset.Click += new System.EventHandler(this.btnAddPreset_Click);
+            this.btnAddAction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddAction.Location = new System.Drawing.Point(12, 426);
+            this.btnAddAction.Name = "btnAddAction";
+            this.btnAddAction.Size = new System.Drawing.Size(75, 23);
+            this.btnAddAction.TabIndex = 8;
+            this.btnAddAction.Text = "追加";
+            this.btnAddAction.UseVisualStyleBackColor = true;
+            this.btnAddAction.Click += new System.EventHandler(this.btnAddAction_Click);
             // 
-            // btnDelete
+            // btnDeleteAction
             // 
-            this.btnDelete.Location = new System.Drawing.Point(114, 426);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 10;
-            this.btnDelete.Text = "削除";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // abountApplicationAToolStripMenuItem
-            // 
-            this.abountApplicationAToolStripMenuItem.Name = "abountApplicationAToolStripMenuItem";
-            this.abountApplicationAToolStripMenuItem.Size = new System.Drawing.Size(145, 20);
-            this.abountApplicationAToolStripMenuItem.Text = "Abount Application(&A)";
-            this.abountApplicationAToolStripMenuItem.Click += new System.EventHandler(this.abountApplicationAToolStripMenuItem_Click);
+            this.btnDeleteAction.Location = new System.Drawing.Point(114, 426);
+            this.btnDeleteAction.Name = "btnDeleteAction";
+            this.btnDeleteAction.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteAction.TabIndex = 10;
+            this.btnDeleteAction.Text = "削除";
+            this.btnDeleteAction.UseVisualStyleBackColor = true;
+            this.btnDeleteAction.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 461);
-            this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnAddPreset);
+            this.Controls.Add(this.btnDeleteAction);
+            this.Controls.Add(this.btnAddAction);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.lbPreset);
+            this.Controls.Add(this.lbAction);
             this.Controls.Add(this.btnDoSelectedAction);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
@@ -321,7 +321,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnDoSelectedAction;
-        private System.Windows.Forms.ListBox lbPreset;
+        private System.Windows.Forms.ListBox lbAction;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileFToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeCToolStripMenuItem;
@@ -336,11 +336,11 @@
         private System.Windows.Forms.Label lblTargetNotebook;
         private System.Windows.Forms.Label lblTargetTag;
         private System.Windows.Forms.ComboBox cbTargetNotebook;
-        private System.Windows.Forms.Button btnAddPreset;
+        private System.Windows.Forms.Button btnAddAction;
         private System.Windows.Forms.ToolStripMenuItem logInIToolStripMenuItem;
         private System.Windows.Forms.Label lblTargetURL;
         private System.Windows.Forms.TextBox tbTargetUrl;
-        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnDeleteAction;
         private System.Windows.Forms.ToolStripMenuItem abountApplicationAToolStripMenuItem;
     }
 }

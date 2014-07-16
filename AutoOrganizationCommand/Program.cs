@@ -15,18 +15,14 @@ namespace AutoOrganizationCommand
         {
             System.Runtime.Serialization.DataContractSerializer serializer = new System.Runtime.Serialization.DataContractSerializer(typeof(Model));
 
-            FileStream fs = new FileStream(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + @"\AutoSettings.xml", FileMode.Open);
+            FileStream fs = new FileStream(@"Settings.xml", FileMode.Open);
 
             Model model_ = (Model)serializer.ReadObject(fs);
 
             fs.Close();
 
-            Console.ReadKey();
-
             foreach (var arg in args)
             {
-                DataRow dr = model_.Presets.Rows.Find(arg);
-
                 bool isMoveNotebook;
                 string moveNotebook;
                 bool isAddTags;

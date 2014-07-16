@@ -13,7 +13,7 @@ namespace AutoOrganization
     public class Model
     {
         [DataMember]
-        DataTable dtPreset_;
+        DataTable dtAction_;
 
         [DataMember]
         string evernoteAuthToken_;
@@ -22,28 +22,28 @@ namespace AutoOrganization
 
         public Model(string evernoteAuthToken)
         {
-            dtPreset_ = new DataTable("Presets");
-            dtPreset_.Columns.Add("ID", typeof(string));
-            dtPreset_.Columns.Add("TargetNotebook", typeof(string));
-            dtPreset_.Columns.Add("TargetTags", typeof(string));
-            dtPreset_.Columns.Add("TargetURL", typeof(string));
-            dtPreset_.Columns.Add("IsMoveNotebook", typeof(bool));
-            dtPreset_.Columns.Add("MoveToNotebook", typeof(string));
-            dtPreset_.Columns.Add("AddTags", typeof(string));
-            dtPreset_.Columns.Add("IsAddTags", typeof(bool));
+            dtAction_ = new DataTable("Actions");
+            dtAction_.Columns.Add("ID", typeof(string));
+            dtAction_.Columns.Add("TargetNotebook", typeof(string));
+            dtAction_.Columns.Add("TargetTags", typeof(string));
+            dtAction_.Columns.Add("TargetURL", typeof(string));
+            dtAction_.Columns.Add("IsMoveNotebook", typeof(bool));
+            dtAction_.Columns.Add("MoveToNotebook", typeof(string));
+            dtAction_.Columns.Add("AddTags", typeof(string));
+            dtAction_.Columns.Add("IsAddTags", typeof(bool));
 
-            dtPreset_.PrimaryKey = new DataColumn[] { dtPreset_.Columns["ID"] };
+            dtAction_.PrimaryKey = new DataColumn[] { dtAction_.Columns["ID"] };
 
-            dtPreset_.AcceptChanges();
+            dtAction_.AcceptChanges();
 
             evernoteAuthToken_ = evernoteAuthToken;
 
             evernote_ = new Evernote(evernoteAuthToken_);
         }
 
-        public DataTable Presets
+        public DataTable Actions
         {
-            get { return dtPreset_; }
+            get { return dtAction_; }
         }
 
         public Evernote Evernote
@@ -67,11 +67,7 @@ namespace AutoOrganization
 
         public List<string> IDs
         {
-            get
-            {
-                List<string> test = Presets.AsEnumerable().Select(n => n["ID"].ToString()).ToList();
-                return test;
-            }
+            get { return Actions.AsEnumerable().Select(n => n["ID"].ToString()).ToList(); }
         }
 
         public void RefleshEvernoteClass()
@@ -79,51 +75,51 @@ namespace AutoOrganization
             evernote_ = new Evernote(EvernoteAuthToken);
         }
 
-        public void AddNewPreset()
+        public void AddNewAction()
         {
-            var newPreset = dtPreset_.NewRow();
+            var newAction = dtAction_.NewRow();
 
             int count = 1;
 
             while (true)
             {
-                if (dtPreset_.AsEnumerable().Select(n => n["ID"].ToString()).Contains("新規プリセット" + count.ToString()) == false)
+                if (dtAction_.AsEnumerable().Select(n => n["ID"].ToString()).Contains("新規プリセット" + count.ToString()) == false)
                 {
-                    newPreset["ID"] = "新規プリセット" + count.ToString();
+                    newAction["ID"] = "新規プリセット" + count.ToString();
                     break;
                 }
 
                 count++;
             }
 
-            newPreset["TargetNotebook"] = evernote_.DefaultNotebookName;
-            newPreset["TargetTags"] = string.Empty;
-            newPreset["TargetURL"] = string.Empty;
-            newPreset["IsMoveNotebook"] = false;
-            newPreset["MoveToNotebook"] = evernote_.DefaultNotebookName;
-            newPreset["IsAddTags"] = false;
-            newPreset["AddTags"] = string.Empty;
+            newAction["TargetNotebook"] = evernote_.DefaultNotebookName;
+            newAction["TargetTags"] = string.Empty;
+            newAction["TargetURL"] = string.Empty;
+            newAction["IsMoveNotebook"] = false;
+            newAction["MoveToNotebook"] = evernote_.DefaultNotebookName;
+            newAction["IsAddTags"] = false;
+            newAction["AddTags"] = string.Empty;
 
-            dtPreset_.Rows.Add(newPreset);
+            dtAction_.Rows.Add(newAction);
 
-            dtPreset_.AcceptChanges();
+            dtAction_.AcceptChanges();
 
             Save();
         }
 
-        public void DeletePreset(int index)
+        public void DeleteAction(int index)
         {
-            dtPreset_.Rows.RemoveAt(index);
+            dtAction_.Rows.RemoveAt(index);
 
-            dtPreset_.AcceptChanges();
+            dtAction_.AcceptChanges();
 
             Save();
         }
 
-        public void UpdatePreset(int index,string targetNotebook,string targetTags,string targetURL,
+        public void UpdateAction(int index,string targetNotebook,string targetTags,string targetURL,
             bool isMoveNotebook,string moveToNotebook,bool isAddTags,string AddTags)
         {
-            DataRow dr=dtPreset_.Rows[index];
+            DataRow dr=dtAction_.Rows[index];
 
             dr["TargetNotebook"] = targetNotebook;
             dr["TargetTags"] = targetTags;
@@ -133,18 +129,18 @@ namespace AutoOrganization
             dr["IsAddTags"] = isAddTags;
             dr["AddTags"] = AddTags;
 
-            dtPreset_.AcceptChanges();
+            dtAction_.AcceptChanges();
 
             Save();
         }
 
         public void RenameAction(int index,string newName)
         {
-            DataRow dr = dtPreset_.Rows[index];
+            DataRow dr = dtAction_.Rows[index];
 
             dr["ID"] = newName;
 
-            dtPreset_.AcceptChanges();
+            dtAction_.AcceptChanges();
 
             Save();
         }
@@ -152,14 +148,14 @@ namespace AutoOrganization
         public void Save()
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(Model));
-            FileStream fs = new FileStream(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + @"\AutoSettings.xml", FileMode.Create);
+            FileStream fs = new FileStream(@"Settings.xml", FileMode.Create);
             serializer.WriteObject(fs, this);
             fs.Close();
         }
 
         public List<string> GetFilteredNoteGuids(string actionName)
         {
-            DataRow dr = Presets.Rows.Find(actionName);
+            DataRow dr = Actions.Rows.Find(actionName);
 
             string targetNotebook = dr["TargetNotebook"].ToString();
             string targetTags = dr["TargetTags"].ToString();
@@ -170,7 +166,7 @@ namespace AutoOrganization
 
         public void ActionParams(string actionName, out bool isMoveNotebook, out string moveNotebook, out bool isAddTags, out string addTags)
         {
-            DataRow dr = Presets.Rows.Find(actionName);
+            DataRow dr = Actions.Rows.Find(actionName);
 
             isMoveNotebook = (bool)dr["IsMoveNotebook"];
             moveNotebook = dr["MoveToNotebook"].ToString();
