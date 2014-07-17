@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.btnDoSelectedAction = new System.Windows.Forms.Button();
             this.lbAction = new System.Windows.Forms.ListBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -301,10 +302,10 @@
             this.Controls.Add(this.lbAction);
             this.Controls.Add(this.btnDoSelectedAction);
             this.Controls.Add(this.menuStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.ShowIcon = false;
             this.Text = "AutoOrganization";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
