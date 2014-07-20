@@ -129,6 +129,9 @@
   <data name="ConfirmActionTitle" xml:space="preserve">
     <value>アクション実行確認</value>
   </data>
+  <data name="ExitApplication" xml:space="preserve">
+    <value>Evernoteにアクセス出来ないため、アプリケーションを終了します。</value>
+  </data>
   <data name="OffLineMsg" xml:space="preserve">
     <value>インターネットに接続されていないため、起動できません。</value>
   </data>

@@ -28,9 +28,9 @@ namespace AutoOrganizationCommand
                 bool isAddTags;
                 string addTags;
 
-                model_.ActionParams(arg, out isMoveNotebook, out moveNotebook, out isAddTags, out addTags);
+                model_.GetActionParams(arg, out isMoveNotebook, out moveNotebook, out isAddTags, out addTags);
 
-                foreach (var noteGuid in model_.GetFilteredNoteGuids(arg))
+                foreach (var noteGuid in model_.GetFilteredNoteGuidsByActionName(arg))
                 {
                     model_.Evernote.DoAction(noteGuid, isMoveNotebook, moveNotebook, isAddTags, addTags);
                 }

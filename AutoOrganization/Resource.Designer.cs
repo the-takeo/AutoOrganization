@@ -97,6 +97,15 @@ namespace AutoOrganization {
         }
         
         /// <summary>
+        ///   Evernoteにアクセス出来ないため、アプリケーションを終了します。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ExitApplication {
+            get {
+                return ResourceManager.GetString("ExitApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   インターネットに接続されていないため、起動できません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string OffLineMsg {

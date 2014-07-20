@@ -153,7 +153,7 @@ namespace AutoOrganization
             fs.Close();
         }
 
-        public List<string> GetFilteredNoteGuids(string actionName)
+        public List<string> GetFilteredNoteGuidsByActionName(string actionName)
         {
             DataRow dr = Actions.Rows.Find(actionName);
 
@@ -164,7 +164,7 @@ namespace AutoOrganization
             return Evernote.GetFilteredNoteGuids(targetNotebook, targetTags, targetURL);
         }
 
-        public void ActionParams(string actionName, out bool isMoveNotebook, out string moveNotebook, out bool isAddTags, out string addTags)
+        public void GetActionParams(string actionName, out bool isMoveNotebook, out string moveNotebook, out bool isAddTags, out string addTags)
         {
             DataRow dr = Actions.Rows.Find(actionName);
 

@@ -23,7 +23,9 @@ namespace AutoOrganization
             InitializeComponent();
 
             if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable() == false)
-                MessageBox.Show(Resource.OffLineMsg);
+            {
+                throw new ApplicationException(Resource.OffLineMsg);
+            }
 
             try
             {
@@ -44,14 +46,13 @@ namespace AutoOrganization
                 if (loginEvernote(out token))
                     model_ = new Model(token);
                 else
-                    Close();
+                    throw new ApplicationException(Resource.ExitApplication);
             }
 
             try
             {
                 //接続確認
                 var userName = model_.Evernote.GetEvernoteUserName;
-
             }
 
             //接続ができない場合、再度ログインし、ライブラリデータのログイン情報のみ更新する
@@ -66,7 +67,7 @@ namespace AutoOrganization
                 }
                 else
                 {
-                    Close();
+                    throw new ApplicationException(Resource.ExitApplication);
                 }
             }
 
@@ -151,7 +152,7 @@ namespace AutoOrganization
         {
             string actionName=lbAction.SelectedItem.ToString();
 
-            List<string> targetNoteGuids = model_.GetFilteredNoteGuids(actionName);
+            List<string> targetNoteGuids = model_.GetFilteredNoteGuidsByActionName(actionName);
 
             if (MessageBox.Show(string.Format(Resource.ConfirmAction, targetNoteGuids.Count.ToString()), Resource.ConfirmActionTitle, MessageBoxButtons.OKCancel) != DialogResult.OK)
                 return;
@@ -161,7 +162,7 @@ namespace AutoOrganization
             bool isAddTags;
             string addTags;
 
-            model_.ActionParams(actionName, out isMoveNotebook, out moveNotebook, out isAddTags, out addTags);
+            model_.GetActionParams(actionName, out isMoveNotebook, out moveNotebook, out isAddTags, out addTags);
 
             //既存Tagでない場合、Tagの追加を行う
             if (isAddTags)
