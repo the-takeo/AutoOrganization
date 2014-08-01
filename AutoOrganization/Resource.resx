@@ -123,6 +123,9 @@
   <data name="ActionResultMsgTitle" xml:space="preserve">
     <value>アクション実行結果</value>
   </data>
+  <data name="AllActionDone" xml:space="preserve">
+    <value>全てのアクションの実行が完了しました。</value>
+  </data>
   <data name="ConfirmAction" xml:space="preserve">
     <value>{0}件のノートが対象となります。よろしいですか。</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="ExitApplication" xml:space="preserve">
     <value>Evernoteにアクセス出来ないため、アプリケーションを終了します。</value>
+  </data>
+  <data name="NotFoundActionID" xml:space="preserve">
+    <value>指定したAction[{0}]は存在しません。</value>
   </data>
   <data name="OffLineMsg" xml:space="preserve">
     <value>インターネットに接続されていないため、起動できません。</value>

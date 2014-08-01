@@ -79,6 +79,15 @@ namespace AutoOrganization {
         }
         
         /// <summary>
+        ///   全てのアクションの実行が完了しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string AllActionDone {
+            get {
+                return ResourceManager.GetString("AllActionDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0}件のノートが対象となります。よろしいですか。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ConfirmAction {
@@ -102,6 +111,15 @@ namespace AutoOrganization {
         public static string ExitApplication {
             get {
                 return ResourceManager.GetString("ExitApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   指定したAction[{0}]は存在しません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NotFoundActionID {
+            get {
+                return ResourceManager.GetString("NotFoundActionID", resourceCulture);
             }
         }
         
