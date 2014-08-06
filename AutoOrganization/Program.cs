@@ -49,12 +49,18 @@ namespace AutoOrganization
                         //IDの存在確認
                         foreach (var arg in args)
                         {
+                            if (arg == "-h")
+                                continue;
+
                             if (model_.IDs.Contains(arg) == false)
                                 throw new ApplicationException(string.Format(Resource.NotFoundActionID, arg));
                         }
 
                         foreach (var arg in args)
                         {
+                            if (arg == "-h")
+                                continue;
+
                             bool isMoveNotebook;
                             string moveNotebook;
                             bool isAddTags;
