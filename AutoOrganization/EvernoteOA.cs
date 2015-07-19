@@ -23,7 +23,7 @@ namespace AutoOrganization
         private static readonly string AUTHORIZE_URI = @"/OAuth.action";
 
         // ダミーのコールバック URI
-        private static readonly string DUMMY_CALLBACK_URI = @"_";
+        private static readonly string DUMMY_CALLBACK_URI = @"http://the-takeo.com/?page_id=418";
 
         // リクエストトークン URI
         private string requestTokenUri_;
